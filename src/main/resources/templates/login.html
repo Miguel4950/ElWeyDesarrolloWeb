@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: head('Iniciar Sesión', 'login.css')}">
+    <meta charset="UTF-8" />
+    <title>Iniciar Sesión - Restaurante El Wey</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+</head>
+
+<body class="bg-[#12100f] text-[#fcf2e9]">
+
+    <!-- =========================================================================
+         2. BARRA DE NAVEGACION REUTILIZABLE (Tomado del fragmento)
+         ========================================================================= -->
+    <header th:replace="~{fragmentos :: navbar}"></header>
+
+    <!-- =========================================================================
+         3. CONTENIDO PRINCIPAL: TARJETA DE INICIO DE SESIÓN
+         ========================================================================= -->
+    <main class="login-main">
+
+        <!-- Tarjeta de Login -->
+        <div class="login-card">
+
+            <!-- Encabezado de la Tarjeta -->
+            <div class="login-header">
+                <!-- Subtítulo en rojo -->
+                <span class="login-subtitle">
+                    Acceso al Sistema
+                </span>
+                <!-- Título Serif Abril Fatface -->
+                <h1 class="login-title">
+                    Iniciar Sesión
+                </h1>
+                <!-- Subtexto informativo -->
+                <p class="login-desc">
+                    Ingresa tus credenciales o selecciona un perfil de acceso
+                </p>
+            </div>
+
+            <!-- Botones de Acceso Rápido por Rol -->
+            <div class="roles-seccion">
+                <p class="roles-titulo">
+                    Acceso rápido por rol:
+                </p>
+                <div class="roles-grid">
+                    <button type="button" onclick="seleccionarRol('CLIENTE', this)"
+                        class="btn-rol-rapido btn-rol-activo">
+                        Cliente
+                    </button>
+                    <button type="button" onclick="seleccionarRol('OPERADOR', this)" class="btn-rol-rapido">
+                        Operador
+                    </button>
+                    <button type="button" onclick="seleccionarRol('ADMIN', this)" class="btn-rol-rapido">
+                        Admin
+                    </button>
+                </div>
+            </div>
+
+            <!-- =================================================================
+                 FORMULARIO CON VARIABLES THYMELEAF
+                 ================================================================= -->
+            <form th:action="@{/login}" method="post" class="form-login">
+
+                <!-- 
+                    [VARIABLE THYMELEAF: MENSAJE DE ERROR]
+                    Se activa si el controlador envía error (${error} o ${param.error})
+                -->
+                <div th:if="${error != null}" class="alerta-error">
+                    <svg class="alerta-icono" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span th:text="${errorMessage}">
+                        Credenciales incorrectas. Inténtalo de nuevo.
+                    </span>
+                </div>
+
+                <!-- 
+                    [VARIABLE THYMELEAF: MENSAJE DE ÉXITO TRAS LOGOUT]
+                -->
+                <div th:if="${param.logout != null}" class="alerta-exito">
+                    <span>Has cerrado sesión con éxito.</span>
+                </div>
+
+                <!-- Campo 1: Correo Electrónico -->
+                <div class="form-grupo">
+                    <label for="email" class="form-label">
+                        Correo Electrónico
+                    </label>
+                    <!-- [VARIABLE THYMELEAF: EMAIL (th:value="${email}")] -->
+                    <input type="email" id="email" name="email" th:value="${email}" placeholder="nombre@ejemplo.com"
+                        required class="form-input" />
+                </div>
+
+                <!-- Campo 2: Contraseña -->
+                <div class="form-grupo">
+                    <label for="password" class="form-label">
+                        Contraseña
+                    </label>
+                    <!-- [CAMPO FORMULARIO: PASSWORD] -->
+                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                        class="form-input" />
+                </div>
+
+                <!-- Campo 3: Perfil / Rol -->
+                <div class="form-grupo">
+                    <label for="rol" class="form-label">
+                        Perfil / Rol:
+                    </label>
+                    <!-- 
+                        [VARIABLE THYMELEAF: ROL SELECCIONADO (th:selected="${selectedRol == 'VALOR'}")]
+                    -->
+                    <select id="rol" name="rol" onchange="actualizarBotonPorSelect(this.value)" class="form-select">
+                        <option value="CLIENTE" th:selected="${selectedRol == 'CLIENTE' or selectedRol == null}">Cliente
+                        </option>
+                        <option value="OPERADOR" th:selected="${selectedRol == 'OPERADOR'}">Operador (Cocina y
+                            Despachos)</option>
+                        <option value="ADMIN" th:selected="${selectedRol == 'ADMIN'}">Administrador</option>
+
+                        <!-- Si se proporciona una lista dinámica de roles desde Spring Boot: -->
+                        <!-- <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option> -->
+                    </select>
+                </div>
+
+                <!-- Botón de Envío -->
+                <!-- [VARIABLE THYMELEAF: TEXTO DINÁMICO DEL BOTÓN (th:text="${textoBoton}")] -->
+                <button type="submit" id="btn-submit-login" class="btn-submit-login"
+                    th:text="${textoBoton} ?: 'INGRESAR COMO CLIENTE'">
+                    INGRESAR COMO CLIENTE
+                </button>
+            </form>
+
+            <!-- Enlace a Registro -->
+            <div class="login-footer-box">
+                <!-- [VARIABLE THYMELEAF: RUTA DE REGISTRO th:href="@{/registro}"] -->
+                <a th:href="@{/registro}" href="/registro" class="link-registro">
+                    ¿No tienes cuenta? Regístrate aquí
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- =========================================================================
+         4. BORDE INFERIOR DE CALAVERAS (Tomado del fragmento)
+         ========================================================================= -->
+    <div th:replace="~{fragmentos :: calaveras}"></div>
+
+    <!-- =========================================================================
+         5. PIE DE PAGINA REUTILIZABLE (Tomado del fragmento)
+         ========================================================================= -->
+    <footer th:replace="~{fragmentos :: footer}"></footer>
+
+    <!-- Botón Flotante de Ayuda (?) -->
+    <a href="#ayuda" title="Ayuda / Soporte" class="btn-flotante-ayuda">?</a>
+
+    <!-- Scripts Reutilizables de Bootstrap (Tomado del fragmento) -->
+    <div th:replace="~{fragmentos :: scripts}"></div>
+
+    <!-- Lógica interactiva separada en archivo JS externo -->
+    <script th:src="@{/js/login.js}" src="/js/login.js"></script>
+
+</body>
+
+</html>

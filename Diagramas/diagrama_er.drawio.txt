@@ -1,0 +1,227 @@
+<mxfile host="app.diagrams.net" modified="2026-09-08T16:05:00.000Z" agent="Antigravity" version="21.0.0" type="device">
+  
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 1: MODELO IMPLEMENTADO SPRINT 3 (JPA ACTUAL)                       -->
+  <!-- ========================================================================= -->
+  <diagram id="sprint3-actual" name="1. Sprint 3 (JPA Actual)">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" background="#F8FAFC" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- BANNER DE ENCABEZADO -->
+        <mxCell id="p1_header" value="&lt;b&gt;RESTAURANTE EL WEY — MODELO ENTIDAD–RELACIÓN IMPLEMENTADO EN JPA&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94A3B8&quot; size=&quot;2&quot;&gt;Entidades y Restricciones Físicas en Código (Sprint 3) • Spring Data JPA • Base de Datos H2&lt;/font&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#1E293B;strokeWidth=2;fontColor=#FFFFFF;fontSize=16;align=left;spacingLeft=25;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ENTIDAD: CATEGORIA -->
+        <mxCell id="p1_cat_header" value="&lt;b&gt;CATEGORIA&lt;/b&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EA580C;strokeColor=#C2410C;strokeWidth=2;fontColor=#FFFFFF;fontSize=15;align=center;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="320" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cat_row1" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long &lt;font color=&quot;#64748B&quot;&gt;[IDENTITY, NOT NULL, UNIQUE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="194" width="320" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cat_row2" value="&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;nombre&lt;/b&gt; : String(50) &lt;font color=&quot;#DC2626&quot;&gt;[UNIQUE, NOT NULL]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="230" width="320" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cat_row3" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;descripcion&lt;/b&gt; : String(255) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="266" width="320" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cat_row4" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;activo&lt;/b&gt; : Boolean &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="302" width="320" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cat_footer" value="" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#CBD5E1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="338" width="320" height="6" as="geometry" />
+        </mxCell>
+
+        <!-- ENTIDAD: COMIDA -->
+        <mxCell id="p1_com_header" value="&lt;b&gt;COMIDA&lt;/b&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#B91C1C;strokeWidth=2;fontColor=#FFFFFF;fontSize=15;align=center;" vertex="1" parent="1">
+          <mxGeometry x="500" y="150" width="360" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row1" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long &lt;font color=&quot;#64748B&quot;&gt;[IDENTITY, NOT NULL, UNIQUE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="194" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row2" value="&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;nombre&lt;/b&gt; : String(80) &lt;font color=&quot;#DC2626&quot;&gt;[NOT NULL]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="228" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row3" value="&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;precio&lt;/b&gt; : Double &lt;font color=&quot;#DC2626&quot;&gt;[NOT NULL]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="262" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row4" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;descripcion&lt;/b&gt; : String(255) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="296" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row5" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;imagenUrl&lt;/b&gt; : String(500) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="330" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row6" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;etiqueta&lt;/b&gt; : String(50) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="364" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row7" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;activo&lt;/b&gt; : Boolean &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="398" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_row8" value="&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;categoria_id&lt;/b&gt; : Long &lt;font color=&quot;#D97706&quot;&gt;[NOT NULL, CASCADE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#F59E0B;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="432" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_com_footer" value="" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#CBD5E1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="466" width="360" height="6" as="geometry" />
+        </mxCell>
+
+        <!-- ENTIDAD: CLIENTE -->
+        <mxCell id="p1_cli_header" value="&lt;b&gt;CLIENTE&lt;/b&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#2563EB;strokeColor=#1D4ED8;strokeWidth=2;fontColor=#FFFFFF;fontSize=15;align=center;" vertex="1" parent="1">
+          <mxGeometry x="940" y="150" width="360" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row1" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long &lt;font color=&quot;#64748B&quot;&gt;[IDENTITY, NOT NULL, UNIQUE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="194" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row2" value="&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;nombre&lt;/b&gt; : String(70) &lt;font color=&quot;#DC2626&quot;&gt;[NOT NULL]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="228" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row3" value="&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;email&lt;/b&gt; : String(100) &lt;font color=&quot;#DC2626&quot;&gt;[UNIQUE, NOT NULL]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="262" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row4" value="&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;telefono&lt;/b&gt; : String(20) &lt;font color=&quot;#DC2626&quot;&gt;[NOT NULL]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="296" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row5" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;password&lt;/b&gt; : String(100) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="330" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row6" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;direccion&lt;/b&gt; : String(150) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="364" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_row7" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ &lt;b&gt;fechaRegistro&lt;/b&gt; : String(30) &lt;font color=&quot;#64748B&quot;&gt;[NULLABLE]&lt;/font&gt;" style="whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="398" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_cli_footer" value="" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#CBD5E1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="432" width="360" height="6" as="geometry" />
+        </mxCell>
+
+        <!-- RELACIÓN 1 : N -->
+        <mxCell id="p1_rel" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;clasifica / contiene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2.5;strokeColor=#EA580C;fontColor=#0F172A;fontSize=12;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;" edge="1" parent="1" source="p1_cat_row1" target="p1_com_row8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="212" />
+              <mxPoint x="440" y="449" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- LEYENDA -->
+        <mxCell id="p1_legend" value="&lt;b&gt;CONVENCIONES DEL MODELO JPA SPRINT 3:&lt;/b&gt;&lt;br&gt;• &lt;b&gt;PK (Primary Key):&lt;/b&gt; ID autoincremental de tipo Long (@GeneratedValue IDENTITY).&lt;br&gt;• &lt;b&gt;FK (Foreign Key):&lt;/b&gt; categoria_id en COMIDA que referencia a CATEGORIA(id) con @OnDelete(action = CASCADE).&lt;br&gt;• &lt;b&gt;* (NOT NULL):&lt;/b&gt; Definido con @Column(nullable = false).&lt;br&gt;• &lt;b&gt;UNIQUE:&lt;/b&gt; Restricción @Column(unique = true) en CATEGORIA.nombre y CLIENTE.email.&lt;br&gt;• &lt;b&gt;CLIENTE:&lt;/b&gt; Entidad para gestión de cuentas, autenticación y portal privado." style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#94A3B8;strokeWidth=1.5;fontColor=#1E293B;fontSize=12;align=left;spacingLeft=25;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="1240" height="150" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 2: MODELO COMPLETO DEL PROYECTO GENERAL RESTAURANTE                -->
+  <!-- ========================================================================= -->
+  <diagram id="proyecto-general" name="2. Proyecto General Restaurante">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" background="#F8FAFC" math="0" shadow="0">
+      <root>
+        <mxCell id="p2_0" />
+        <mxCell id="p2_1" parent="p2_0" />
+
+        <!-- BANNER DE ENCABEZADO -->
+        <mxCell id="p2_header" value="&lt;b&gt;RESTAURANTE EL WEY — MODELO ENTIDAD–RELACIÓN COMPLETO DEL SISTEMA&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94A3B8&quot; size=&quot;2&quot;&gt;Arquitectura Global del Negocio: Menú, Clientes, Pedidos, Mesas y Facturación&lt;/font&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#1E293B;strokeWidth=2;fontColor=#FFFFFF;fontSize=16;align=left;spacingLeft=25;" vertex="1" parent="p2_1">
+          <mxGeometry x="50" y="30" width="1460" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- 1. CATEGORIA -->
+        <mxCell id="p2_cat_h" value="&lt;b&gt;CATEGORIA&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#FFE4D6&quot;&gt;[Sprint 3 - JPA]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EA580C;strokeColor=#C2410C;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="50" y="140" width="270" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_cat_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;nombre&lt;/b&gt; : String(50) [UNIQUE]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ descripcion : String(255)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ activo : Boolean" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="50" y="186" width="270" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- 2. COMIDA -->
+        <mxCell id="p2_com_h" value="&lt;b&gt;COMIDA&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#FEE2E2&quot;&gt;[Sprint 3 - JPA]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#B91C1C;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="400" y="140" width="290" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_com_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;nombre&lt;/b&gt; : String(80) [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;precio&lt;/b&gt; : Double [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ descripcion : String(255)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ imagenUrl : String(500)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ etiqueta : String(50)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ activo : Boolean&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;categoria_id&lt;/b&gt; : Long [NOT NULL]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="400" y="186" width="290" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- 3. DETALLE_PEDIDO -->
+        <mxCell id="p2_det_h" value="&lt;b&gt;DETALLE_PEDIDO&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#FEF3C7&quot;&gt;[Gestión de Órdenes]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=#B45309;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="780" y="140" width="290" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_det_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;cantidad&lt;/b&gt; : Integer [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;precioUnitario&lt;/b&gt; : Double [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;subtotal&lt;/b&gt; : Double [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ notas : String(200)&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;pedido_id&lt;/b&gt; : Long [NOT NULL]&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;comida_id&lt;/b&gt; : Long [NOT NULL]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="780" y="186" width="290" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- 4. PEDIDO -->
+        <mxCell id="p2_ped_h" value="&lt;b&gt;PEDIDO&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#E0E7FF&quot;&gt;[Gestión de Órdenes]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#4F46E5;strokeColor=#4338CA;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="1170" y="140" width="320" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_ped_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;fechaHora&lt;/b&gt; : Timestamp [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;total&lt;/b&gt; : Double [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;estado&lt;/b&gt; : String(30) [PENDIENTE, LISTO]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ tipoServicio : String(30) [MESA, DOMICILIO]&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;cliente_id&lt;/b&gt; : Long [NOT NULL]&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;mesa_id&lt;/b&gt; : Long [OPCIONAL]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="1170" y="186" width="320" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- 5. CLIENTE -->
+        <mxCell id="p2_cli_h" value="&lt;b&gt;CLIENTE&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#DBEAFE&quot;&gt;[Sprint 3 - JPA]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#2563EB;strokeColor=#1D4ED8;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="1170" y="470" width="320" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_cli_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;nombre&lt;/b&gt; : String(70) [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;email&lt;/b&gt; : String(100) [UNIQUE, NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;telefono&lt;/b&gt; : String(20) [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ password : String(100)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ direccion : String(150)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ fechaRegistro : String(30)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="1170" y="516" width="320" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- 6. MESA -->
+        <mxCell id="p2_mes_h" value="&lt;b&gt;MESA&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#DCFCE7&quot;&gt;[Salón y Servicio]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#16A34A;strokeColor=#15803D;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="780" y="470" width="290" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_mes_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;numeroMesa&lt;/b&gt; : Integer [UNIQUE]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;capacidad&lt;/b&gt; : Integer [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ ubicacion : String(50) [TERRAZA, SALON]&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;│ estado : String(30) [LIBRE, OCUPADA]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="780" y="516" width="290" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- 7. PAGO / FACTURA -->
+        <mxCell id="p2_pag_h" value="&lt;b&gt;PAGO / FACTURA&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#F3E8FF&quot;&gt;[Facturación]&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#9333EA;strokeColor=#7E22CE;strokeWidth=2;fontColor=#FFFFFF;fontSize=14;align=center;" vertex="1" parent="p2_1">
+          <mxGeometry x="1170" y="760" width="320" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_pag_body" value="&lt;b&gt;PK&lt;/b&gt; │ &lt;b&gt;id&lt;/b&gt; : Long [IDENTITY]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;numeroFactura&lt;/b&gt; : String(50) [UNIQUE]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;fechaEmision&lt;/b&gt; : Timestamp [NOT NULL]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;metodoPago&lt;/b&gt; : String(50) [TARJETA, EFECTIVO]&lt;br&gt;&amp;nbsp;&amp;nbsp;* │ &lt;b&gt;montoTotal&lt;/b&gt; : Double [NOT NULL]&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; │ &lt;b&gt;pedido_id&lt;/b&gt; : Long [UNIQUE, NOT NULL]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#0F172A;fontSize=11;align=left;spacingLeft=10;lineHeight=1.8;" vertex="1" parent="p2_1">
+          <mxGeometry x="1170" y="806" width="320" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- RELACIONES GENERALES -->
+        <!-- CATEGORIA (1) -> (N) COMIDA -->
+        <mxCell id="p2_r1" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;clasifica" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2.5;strokeColor=#EA580C;fontColor=#0F172A;fontSize=11;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERone;endArrow=ERmany;" edge="1" parent="p2_1" source="p2_cat_body" target="p2_com_body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- COMIDA (1) -> (N) DETALLE_PEDIDO -->
+        <mxCell id="p2_r2" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;incluido en" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2.5;strokeColor=#DC2626;fontColor=#0F172A;fontSize=11;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERone;endArrow=ERmany;" edge="1" parent="p2_1" source="p2_com_body" target="p2_det_body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- PEDIDO (1) -> (N) DETALLE_PEDIDO -->
+        <mxCell id="p2_r3" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;compuesto de" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2.5;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=11;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERone;endArrow=ERmany;" edge="1" parent="p2_1" source="p2_ped_body" target="p2_det_body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENTE (1) -> (N) PEDIDO -->
+        <mxCell id="p2_r4" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;realiza" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2.5;strokeColor=#2563EB;fontColor=#0F172A;fontSize=11;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERone;endArrow=ERmany;" edge="1" parent="p2_1" source="p2_cli_body" target="p2_ped_body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- MESA (0..1) -> (N) PEDIDO -->
+        <mxCell id="p2_r5" value="&lt;b&gt;0..1 : N&lt;/b&gt;&lt;br&gt;asigna a" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#16A34A;fontColor=#0F172A;fontSize=11;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERzeroToOne;endArrow=ERmany;" edge="1" parent="p2_1" source="p2_mes_body" target="p2_ped_body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- PEDIDO (1) -> (1) PAGO -->
+        <mxCell id="p2_r6" value="&lt;b&gt;1 : 1&lt;/b&gt;&lt;br&gt;genera pago" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#9333EA;fontColor=#0F172A;fontSize=11;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;startArrow=ERmandOne;endArrow=ERmandOne;" edge="1" parent="p2_1" source="p2_ped_body" target="p2_pag_body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CUADRO DE LEYENDA DEL SISTEMA COMPLETO -->
+        <mxCell id="p2_legend" value="&lt;b&gt;ARQUITECTURA DEL NEGOCIO RESTAURANTE EL WEY (MODELO GLOBAL):&lt;/b&gt;&lt;br&gt;&lt;br&gt;• &lt;b&gt;Entidades Base Implementadas en Sprint 3 (JPA Activo):&lt;/b&gt; CATEGORIA, COMIDA y CLIENTE.&lt;br&gt;• &lt;b&gt;Entidades del Negocio Integral (Gestión y Operaciones):&lt;/b&gt; PEDIDO, DETALLE_PEDIDO, MESA y PAGO/FACTURA.&lt;br&gt;• &lt;b&gt;Flujo Transaccional:&lt;/b&gt; Un CLIENTE genera PEDIDOS en una MESA. Cada PEDIDO desglosa ítems en DETALLE_PEDIDO asociados a COMIDAS del catálogo, y al cerrarse produce una FACTURA única (1 a 1).&lt;br&gt;• &lt;b&gt;Notación Relacional:&lt;/b&gt; Llaves Primarias (PK), Llaves Foráneas (FK) y Restricciones de Unicidad y No Nulidad documentadas." style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#94A3B8;strokeWidth=1.5;fontColor=#1E293B;fontSize=12;align=left;spacingLeft=25;" vertex="1" parent="p2_1">
+          <mxGeometry x="50" y="470" width="670" height="230" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>
