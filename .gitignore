@@ -28,6 +28,13 @@ target/
 ### VS Code ###
 .vscode/
 
+### Diagram sources (only .jpg allowed) ###
+Diagramas/*.drawio
+Diagramas/*.drawio.txt
+Diagramas/*.txt
+*.drawio
+*.drawio.txt
+
 ### OS Files ###
 Thumbs.db
 Desktop.ini
