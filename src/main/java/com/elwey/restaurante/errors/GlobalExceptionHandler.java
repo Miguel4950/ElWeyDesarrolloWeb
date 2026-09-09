@@ -18,4 +18,10 @@ public class GlobalExceptionHandler {
         model.addAttribute("mensaje", ex.getMessage());
         return "error";
     }
+
+    @ExceptionHandler(ClienteNotFoundException.class)
+    public String handleClienteNotFound(ClienteNotFoundException ex, Model model) {
+        model.addAttribute("mensaje", ex.getMessage());
+        return "error";
+    }
 }

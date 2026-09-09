@@ -1,22 +1,20 @@
 package com.elwey.restaurante.dto;
 
 import com.elwey.restaurante.entities.Comida;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
 public class ComidaResponseDto {
     private Comida comida;
     private String nombreCategoria;
-
-    // Constructores, Getters y Setters (o Lombok @Data / @AllArgsConstructor)
-    public ComidaResponseDto(Comida comida, String nombreCategoria) {
-        this.comida = comida;
-        this.nombreCategoria = nombreCategoria;
-    }
-
-    public Comida getComida() {
-        return comida;
-    }
-
-    public String getNombreCategoria() {
-        return nombreCategoria;
-    }
 }

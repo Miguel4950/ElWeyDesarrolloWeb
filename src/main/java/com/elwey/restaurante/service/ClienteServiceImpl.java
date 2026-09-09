@@ -1,6 +1,7 @@
 package com.elwey.restaurante.service;
 
 import com.elwey.restaurante.entities.Cliente;
+import com.elwey.restaurante.errors.ClienteNotFoundException;
 import com.elwey.restaurante.repository.ClienteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,9 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional(readOnly = true)
     public Cliente obtenerPorId(Long id) {
-        log.info("Buscando cliente con ID: " + id);
-        return repo.findById(id).orElse(null);
+        log.info("Buscando cliente con ID: {}", id);
+        return repo.findById(id)
+                .orElseThrow(() -> new ClienteNotFoundException(id));
     }
 
     @Override
@@ -73,7 +75,10 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public void eliminar(Long id) {
-        log.info("Eliminando cliente con ID: " + id);
+        log.info("Eliminando cliente con ID: {}", id);
+        if (!repo.existsById(id)) {
+            throw new ClienteNotFoundException(id);
+        }
         repo.deleteById(id);
     }
 }

@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString(exclude = "categoria")
 public class Comida {
@@ -39,43 +40,11 @@ public class Comida {
     @JoinColumn(name = "categoria_id", nullable = false, unique = false)
     private Categoria categoria;
 
-    // Constructor exacto que pide el profesor: todos los campos MENOS el id
+    // Constructor sin ID para facilitar creación directa
     public Comida(String nombre, Double precio, String descripcion, Categoria categoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
-        this.categoria = categoria;
-    }
-
-    // Constructor completo para que @Builder funcione sin chillar
-    public Comida(Long id, String nombre, Double precio, String descripcion, Categoria categoria) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-    }
-
-    // Constructor con campos visuales sin ID
-    public Comida(String nombre, Double precio, String descripcion, String imagenUrl, String etiqueta, Boolean activo, Categoria categoria) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.imagenUrl = imagenUrl;
-        this.etiqueta = etiqueta;
-        this.activo = activo != null ? activo : true;
-        this.categoria = categoria;
-    }
-
-    // Constructor completo con campos visuales
-    public Comida(Long id, String nombre, Double precio, String descripcion, String imagenUrl, String etiqueta, Boolean activo, Categoria categoria) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.imagenUrl = imagenUrl;
-        this.etiqueta = etiqueta;
-        this.activo = activo != null ? activo : true;
         this.categoria = categoria;
     }
 
