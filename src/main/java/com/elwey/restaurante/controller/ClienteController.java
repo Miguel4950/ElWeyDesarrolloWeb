@@ -24,15 +24,12 @@ public class ClienteController {
     Logger log = LoggerFactory.getLogger(ClienteController.class);
 
     /**
-     * GET /cliente/portal → Si se accede directo desde la barra de navegación,
-     * redirige a login para que ingrese sus credenciales.
+     * GET /cliente/portal → Muestra el portal del cliente. Si se accede directo
+     * desde la barra de navegación sin id, abre el perfil predeterminado (ID 1).
      */
     @GetMapping("/portal")
-    public String miPortalDirecto(@RequestParam(name = "id", required = false) Long id) {
-        if (id != null) {
-            return "redirect:/cliente/portal/" + id;
-        }
-        return "redirect:/login";
+    public String miPortalDirecto(@RequestParam(name = "id", required = false, defaultValue = "1") Long id) {
+        return "redirect:/cliente/portal/" + id;
     }
 
     /**

@@ -20,10 +20,10 @@
                  ENCABEZADO DE LA SECCIÓN
                  ========================================================================= -->
             <div class="portal-encabezado">
-                <p class="portal-subtitulo">CUENTA PERSONAL</p>
+                <p class="portal-subtitulo">PANEL DEL CLIENTE</p>
                 <h1 class="portal-titulo text-4xl">Mi Portal</h1>
                 <p class="portal-desc">
-                    Gestiona tu información personal, actualiza tus datos de contacto y dirección.
+                    Bienvenido a tu panel de control personal en Restaurante El Wey.
                 </p>
             </div>
 
@@ -36,16 +36,79 @@
 
             <!-- Mensaje de bienvenida tras registro -->
             <div th:if="${param.bienvenido != null}" style="margin-bottom: 20px; padding: 14px 18px; background-color: rgba(6, 78, 59, 0.7); border: 1px solid #059669; border-radius: 6px; color: #a7f3d0; font-size: 13px; text-align: center;">
-                <span>🎉 <strong>¡Bienvenido a El Wey!</strong> Tu cuenta ha sido creada exitosamente. Este es tu portal personal.</span>
+                <span>🎉 <strong>¡Bienvenido a El Wey!</strong> Tu cuenta ha sido creada exitosamente. Este es tu panel de cliente.</span>
             </div>
 
             <!-- =========================================================================
-                 TARJETA: INFORMACIÓN DEL CLIENTE
+                 PANEL DASHBOARD: RESUMEN DEL USUARIO Y ESTADÍSTICAS
+                 ========================================================================= -->
+            <div class="mb-6 rounded-lg border border-[#3a302d] bg-[#1a1716] p-6 shadow-xl">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-[#2d2422] pb-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#ee1a0e] to-[#ab1d19] flex items-center justify-center text-2xl font-bold text-white shadow-lg border-2 border-[#fcf2e9]/20">
+                            <span th:text="${#strings.substring(cliente.nombre, 0, 1)}">C</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-2xl font-bold text-[#fcf2e9] mb-0" th:text="${cliente.nombre}">Nombre Cliente</h2>
+                                <span class="bg-[#ee1a0e]/20 text-[#ee1a0e] text-xs font-bold px-2 py-0.5 rounded border border-[#ee1a0e]/40">VIP</span>
+                            </div>
+                            <p class="text-sm text-[#a89f91] mb-0 mt-1" th:text="${cliente.correo}">correo@ejemplo.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs px-3 py-1.5 rounded-full bg-[#12100f] border border-[#2d2422] text-[#fcf2e9]">
+                            Cliente ID: <strong class="text-amber-400" th:text="'#' + ${cliente.id}">#1</strong>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Métricas / Estadísticas del Panel -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+                    <div class="p-3 rounded bg-[#12100f] border border-[#2d2422] text-center">
+                        <span class="text-xs text-[#a89f91] uppercase tracking-wider block mb-1">Membresía</span>
+                        <span class="text-base font-bold text-amber-400">Club El Wey Oro</span>
+                        <span class="text-[11px] text-[#a89f91] block mt-0.5">10% Dcto en cartas</span>
+                    </div>
+                    <div class="p-3 rounded bg-[#12100f] border border-[#2d2422] text-center">
+                        <span class="text-xs text-[#a89f91] uppercase tracking-wider block mb-1">Miembro Desde</span>
+                        <span class="text-base font-bold text-[#fcf2e9]" th:text="${cliente.fechaRegistro}">2026-01-15</span>
+                        <span class="text-[11px] text-emerald-400 block mt-0.5">● Cuenta Activa</span>
+                    </div>
+                    <div class="p-3 rounded bg-[#12100f] border border-[#2d2422] text-center">
+                        <span class="text-xs text-[#a89f91] uppercase tracking-wider block mb-1">Entrega Principal</span>
+                        <span class="text-sm font-semibold text-[#fcf2e9] truncate block" th:text="${cliente.direccion}">Bogotá</span>
+                        <span class="text-[11px] text-[#a89f91] block mt-0.5">Bogotá D.C.</span>
+                    </div>
+                </div>
+
+                <!-- Accesos Rápidos del Panel -->
+                <div class="mt-6 pt-4 border-t border-[#2d2422] flex flex-wrap items-center justify-between gap-3">
+                    <span class="text-xs uppercase tracking-wider font-semibold text-[#a89f91]">Accesos Rápidos:</span>
+                    <div class="flex flex-wrap gap-2">
+                        <a th:href="@{/comidas/tarjetas}" class="text-xs px-3 py-1.5 rounded bg-[#ab1d19] text-white hover:bg-[#ee1a0e] transition-colors font-semibold">
+                            🌮 Ver Menú
+                        </a>
+                        <a th:href="@{/comidas/tabla}" class="text-xs px-3 py-1.5 rounded bg-[#2a2422] text-[#fcf2e9] hover:bg-[#3d3330] transition-colors font-medium border border-[#3a302d]">
+                            📋 Tabla de Precios
+                        </a>
+                        <a th:href="@{/admin/vertodo}" class="text-xs px-3 py-1.5 rounded bg-[#2a2422] text-[#fcf2e9] hover:bg-[#3d3330] transition-colors font-medium border border-[#3a302d]">
+                            👥 Clientes Registrados
+                        </a>
+                        <a th:href="@{/login}" class="text-xs px-3 py-1.5 rounded bg-[#1f1a18] text-amber-400 hover:text-amber-300 transition-colors font-medium border border-amber-500/30">
+                            🔑 Cambiar Usuario
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================================================================
+                 TARJETA: MODIFICAR INFORMACIÓN PERSONAL
                  [VARIABLE THYMELEAF]: th:object="${cliente}" vincula el objeto Cliente del modelo
                  ========================================================================= -->
             <div class="portal-card border border-[#3a302d] bg-[#1a1716] p-6 shadow-2xl sm:p-10">
 
-                <h2 class="portal-card-titulo">Información Personal</h2>
+                <h2 class="portal-card-titulo">Modificar Datos de la Cuenta</h2>
 
                 <form th:action="@{/cliente/portal/actualizar/{id}(id=${cliente.id})}" th:object="${cliente}" method="post"
                     class="portal-form space-y-6">
