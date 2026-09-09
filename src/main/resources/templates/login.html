@@ -85,6 +85,13 @@
                     <span>Has cerrado sesión con éxito.</span>
                 </div>
 
+                <!-- 
+                    [VARIABLE THYMELEAF: MENSAJE CUANDO SE INTENTA ENTRAR A MI PORTAL SIN SESIÓN]
+                -->
+                <div th:if="${param.portal != null}" class="alerta-info">
+                    <span>Inicia sesión para acceder a <strong>Mi Portal</strong>, o crea una cuenta nueva.</span>
+                </div>
+
                 <!-- Campo 1: Correo Electrónico -->
                 <div class="form-grupo">
                     <label for="email" class="form-label">
@@ -139,6 +146,17 @@
                 <a th:href="@{/registro}" href="/registro" class="link-registro">
                     ¿No tienes cuenta? Regístrate aquí
                 </a>
+            </div>
+
+            <!-- Credenciales de prueba rápidas para evaluación -->
+            <div style="margin-top: 18px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; font-size: 11px; color: #a89f91;">
+                <p style="margin: 0 0 6px 0; font-weight: 700; color: #fcf2e9; text-transform: uppercase; letter-spacing: 0.5px;">Credenciales de prueba:</p>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div><span style="color: #facc15; font-weight: 600;">Cliente 1:</span> lionel.messi@email.com / <span style="color: #fff;">messi10</span></div>
+                    <div><span style="color: #facc15; font-weight: 600;">Cliente 2:</span> cristiano.ronaldo@email.com / <span style="color: #fff;">cr7cr7</span></div>
+                    <div><span style="color: #ef4444; font-weight: 600;">Operador:</span> Selecciona rol <strong>Operador</strong> con tu cuenta</div>
+                    <div><span style="color: #ef4444; font-weight: 600;">Admin:</span> Selecciona rol <strong>Admin</strong> con tu cuenta</div>
+                </div>
             </div>
 
         </div>

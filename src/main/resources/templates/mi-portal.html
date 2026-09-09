@@ -28,6 +28,16 @@
             </div>
 
             <div class="portal-divider"></div>
+            
+            <!-- Mensaje de éxito al actualizar -->
+            <div th:if="${param.actualizado != null}" style="margin-bottom: 20px; padding: 14px 18px; background-color: rgba(6, 78, 59, 0.7); border: 1px solid #059669; border-radius: 6px; color: #a7f3d0; font-size: 13px; text-align: center;">
+                <span>✅ <strong>¡Éxito!</strong> Tus datos de perfil se actualizaron correctamente en el sistema.</span>
+            </div>
+
+            <!-- Mensaje de bienvenida tras registro -->
+            <div th:if="${param.bienvenido != null}" style="margin-bottom: 20px; padding: 14px 18px; background-color: rgba(6, 78, 59, 0.7); border: 1px solid #059669; border-radius: 6px; color: #a7f3d0; font-size: 13px; text-align: center;">
+                <span>🎉 <strong>¡Bienvenido a El Wey!</strong> Tu cuenta ha sido creada exitosamente. Este es tu portal personal.</span>
+            </div>
 
             <!-- =========================================================================
                  TARJETA: INFORMACIÓN DEL CLIENTE

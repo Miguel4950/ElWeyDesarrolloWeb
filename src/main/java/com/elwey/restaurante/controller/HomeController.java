@@ -73,7 +73,14 @@ public class HomeController {
             Model model) {
         try {
             Cliente cliente = clienteService.autenticar(email, password);
-            return "redirect:/cliente/portal/" + cliente.getId();
+
+            if ("ADMIN".equalsIgnoreCase(rol)) {
+                return "redirect:/admin/productos";
+            } else if ("OPERADOR".equalsIgnoreCase(rol)) {
+                return "redirect:/admin/vertodo";
+            } else {
+                return "redirect:/cliente/portal/" + cliente.getId();
+            }
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("error", true);
@@ -96,14 +103,6 @@ public class HomeController {
 
     /**
      * POST /registro – Registra un nuevo cliente en la aplicación.
-     * Recibe:
-     * • cliente – objeto Cliente con los datos enviados por el formulario
-     * • rol – perfil seleccionado al registrar
-     * • model – modelo para enviar atributos a la vista
-     * En caso de error capturado por la excepción del servicio:
-     * • errorMessage – mensaje si el correo ya existe o no es válido
-     * • error – bandera para mostrar el error
-     * • selectedRol – rol seleccionado para conservarlo en el formulario
      */
     @PostMapping("/registro")
     public String registrarCliente(
@@ -111,8 +110,8 @@ public class HomeController {
             @RequestParam(required = false, defaultValue = "CLIENTE") String rol,
             Model model) {
         try {
-            clienteService.guardar(cliente);
-            return "redirect:/login?exito";
+            Cliente guardado = clienteService.guardar(cliente);
+            return "redirect:/cliente/portal/" + guardado.getId();
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("error", true);

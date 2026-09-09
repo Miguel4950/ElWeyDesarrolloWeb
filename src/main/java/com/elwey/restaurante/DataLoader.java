@@ -62,42 +62,42 @@ public class DataLoader implements CommandLineRunner {
         // Los 8 platos emblemáticos del Sprint 1 y 2
         comidas.add(new Comida(null, "Tacos al Pastor", 18000.0,
                 "Carne de cerdo marinada en achiote tradicional, piña asada al carbón, cilantro fresco y cebolla en tortilla de maíz nixtamalizada.",
-                "https://images.unsplash.com/photo-1648437595587-e6a8b0cdf1f9?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/tacos-al-pastor.jpg",
                 "Estrella", true, catTacos));
 
         comidas.add(new Comida(null, "Quesadilla de Birria", 22000.0,
                 "Tortilla de maíz rellena de queso Oaxaca fundido y jugosa birria de res cocinada a fuego lento por 8 horas. Acompañada de consomé para sumergir.",
-                "https://images.unsplash.com/photo-1617990590988-895fe6cbabda?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/quesadilla-de-birria.jpg",
                 "Top Ventas", true, catQuesadillas));
 
         comidas.add(new Comida(null, "Guacamole El Wey", 15000.0,
                 "Aguacate Hass seleccionado machacado al momento en molcajete con tomate, jalapeño, cilantro y toque de limón. Servido con totopos artesanales crujientes.",
-                "https://images.unsplash.com/photo-1613514967307-d5b3471b2453?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/guacamole-el-wey.jpg",
                 "Vegano", true, catEntradas));
 
         comidas.add(new Comida(null, "Enchiladas Rojas", 20000.0,
                 "Tres tortillas de maíz rellenas de pechuga de pollo deshebrada, bañadas en salsa roja de chiles secos, cubiertas con crema ácida, queso fresco y cebolla morada.",
-                "https://images.unsplash.com/photo-1670213545333-9d4ec81de4b1?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/enchiladas-rojas.jpg",
                 "Recomendado", true, catEspecialidades));
 
         comidas.add(new Comida(null, "Burrito Norteño", 24000.0,
                 "Tortilla de harina gigante rellena de carne asada al carbón, frijoles refritos bayos, arroz a la mexicana, queso Chihuahua fundido y pico de gallo.",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/burrito-norteno.jpg",
                 "Grande", true, catBurritos));
 
         comidas.add(new Comida(null, "Tacos de Suadero", 19000.0,
                 "Corte suave de res confitado lentamente en su propia grasa estilo CDMX, picado al momento con cilantro criollo, cebolla y salsa taquera verde.",
-                "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/tacos-de-suadero.jpg",
                 "Clásico", true, catTacos));
 
         comidas.add(new Comida(null, "Nachos El Wey", 23000.0,
                 "Cama abundante de totopos de maíz crujientes, frijoles refritos, abundante queso fundido Oaxaca y Cheddar, pico de gallo fresco, jalapeños en escabeche, crema ácida y guacamole especial.",
-                "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/nachos-el-wey.jpg",
                 "Para Compartir", true, catEntradas));
 
         comidas.add(new Comida(null, "Gringa con Carne (la favorita de jaimes)", 21000.0,
                 "Deliciosa quesadilla en tortilla de harina dorada a la plancha con mantequilla, rellena de abundante carne al pastor, queso Oaxaca derretido, piña asada caramelizada y cilantro fresco.",
-                "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&auto=format",
+                "/images/comidas/gringa-con-carne.jpg",
                 "Favorito", true, catQuesadillas));
 
         // Platos 9 al 40 (32 platillos mexicanos adicionales)
@@ -124,38 +124,38 @@ public class DataLoader implements CommandLineRunner {
         };
 
         String[] fotosExtra = {
-                "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1512838243191-0b10497ed592?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1648437595587-e6a8b0cdf1f9?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1617990590988-895fe6cbabda?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1617990590988-895fe6cbabda?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1617990590988-895fe6cbabda?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1617990590988-895fe6cbabda?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1613514967307-d5b3471b2453?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1613514967307-d5b3471b2453?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1670213545333-9d4ec81de4b1?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1670213545333-9d4ec81de4b1?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1670213545333-9d4ec81de4b1?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1670213545333-9d4ec81de4b1?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1670213545333-9d4ec81de4b1?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1617990590988-895fe6cbabda?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format",
-                "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=600&h=400&fit=crop&auto=format"
+                "/images/comidas/tacos-carnitas-michoacan.jpg",
+                "/images/comidas/tacos-pescado-baja.jpg",
+                "/images/comidas/tacos-gobernador.jpg",
+                "/images/comidas/tacos-cochinita-pibil.jpg",
+                "/images/comidas/tacos-barbacoa-hidalguense.jpg",
+                "/images/comidas/tacos-ribeye-tuetano.jpg",
+                "/images/comidas/tacos-chicharron-verde.jpg",
+                "/images/comidas/tacos-asada-poblana.jpg",
+                "/images/comidas/quesadilla-flor-calabaza.jpg",
+                "/images/comidas/quesadilla-champinones.jpg",
+                "/images/comidas/quesadilla-sincronizada.jpg",
+                "/images/comidas/quesadilla-chicharron-prensado.jpg",
+                "/images/comidas/quesadilla-nortena-arrachera.jpg",
+                "/images/comidas/quesadilla-tinga-poblana.jpg",
+                "/images/comidas/totopos-queso-fundido.jpg",
+                "/images/comidas/esquites-callejeros.jpg",
+                "/images/comidas/queso-fundido-chorizo.jpg",
+                "/images/comidas/flautas-doradas-pollo.jpg",
+                "/images/comidas/sopes-tradicionales-cecina.jpg",
+                "/images/comidas/tostadas-tinga-crema.jpg",
+                "/images/comidas/chiles-en-nogada.jpg",
+                "/images/comidas/pozole-rojo.jpg",
+                "/images/comidas/mole-poblano.jpg",
+                "/images/comidas/tamal-oaxaqueno.jpg",
+                "/images/comidas/fajitas-mixtas-carbon.jpg",
+                "/images/comidas/cochinita-pibil-plato.jpg",
+                "/images/comidas/birria-tapatia-cazuela.jpg",
+                "/images/comidas/alambre-mixto-res.jpg",
+                "/images/comidas/burrito-california-papas.jpg",
+                "/images/comidas/burrito-tinga-deshebrada.jpg",
+                "/images/comidas/burrito-pastor-queso.jpg",
+                "/images/comidas/burrito-vegetariano.jpg"
         };
 
         Categoria[] catAsignadaExtra = {
