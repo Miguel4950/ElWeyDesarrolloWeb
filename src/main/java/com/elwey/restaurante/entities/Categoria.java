@@ -35,22 +35,4 @@ public class Categoria {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Builder.Default
     private List<Comida> comidas = new ArrayList<>();
-
-    public Categoria(Long id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-        this.comidas = new ArrayList<>();
-    }
-
-    public Categoria(String nombre) {
-        this.nombre = nombre;
-        this.comidas = new ArrayList<>();
-    }
-
-    public Categoria(String nombre, String descripcion, Boolean activo) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.activo = activo;
-        this.comidas = new ArrayList<>();
-    }
 }

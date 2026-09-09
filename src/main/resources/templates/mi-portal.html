@@ -29,9 +29,10 @@
 
             <div class="portal-divider"></div>
             
-            <!-- Mensaje de éxito al actualizar -->
-            <div th:if="${param.actualizado != null}" style="margin-bottom: 20px; padding: 14px 18px; background-color: rgba(6, 78, 59, 0.7); border: 1px solid #059669; border-radius: 6px; color: #a7f3d0; font-size: 13px; text-align: center;">
-                <span>✅ <strong>¡Éxito!</strong> Tus datos de perfil se actualizaron correctamente en el sistema.</span>
+            <!-- Mensaje de confirmación al actualizar datos -->
+            <div th:if="${param.actualizado != null}" style="margin-bottom: 22px; padding: 14px 20px; background-color: rgba(6, 78, 59, 0.6); border: 1px solid #10b981; border-radius: 8px; color: #a7f3d0; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);">
+                <span style="font-size: 18px;">✅</span>
+                <span><strong>¡Cambios confirmados!</strong> Tu información personal ha sido actualizada con éxito en el sistema.</span>
             </div>
 
             <!-- Mensaje de bienvenida tras registro -->

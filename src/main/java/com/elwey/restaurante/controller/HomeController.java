@@ -44,6 +44,14 @@ public class HomeController {
     }
 
     /**
+     * GET /h2-console, GET /consola – Redirige a la consola de base de datos H2.
+     */
+    @GetMapping({ "/h2-console", "/consola" })
+    public String h2ConsoleRedirect() {
+        return "redirect:/h2";
+    }
+
+    /**
      * GET /login – Muestra la pantalla de inicio de sesión del cliente.
      * Envía al modelo:
      * • no agrega datos, solo carga la vista de login
@@ -69,14 +77,13 @@ public class HomeController {
     public String iniciarSesion(
             @RequestParam String email,
             @RequestParam String password,
-            @RequestParam(required = false, defaultValue = "CLIENTE") String rol,
             Model model) {
         try {
             Cliente cliente = clienteService.autenticar(email, password);
 
-            if ("ADMIN".equalsIgnoreCase(rol)) {
+            if ("admin@elwey.com".equalsIgnoreCase(email.trim())) {
                 return "redirect:/admin/productos";
-            } else if ("OPERADOR".equalsIgnoreCase(rol)) {
+            } else if ("operador@elwey.com".equalsIgnoreCase(email.trim())) {
                 return "redirect:/admin/vertodo";
             } else {
                 return "redirect:/cliente/portal/" + cliente.getId();
@@ -85,7 +92,6 @@ public class HomeController {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("error", true);
             model.addAttribute("email", email);
-            model.addAttribute("selectedRol", rol);
             return "login";
         }
     }

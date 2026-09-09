@@ -102,9 +102,17 @@ p {
 }
 
 .logo img {
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   border: 2px solid #ab1d19;
   object-fit: cover;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 12px rgba(238, 26, 14, 0.4);
 }
 
 .menu-enlaces {

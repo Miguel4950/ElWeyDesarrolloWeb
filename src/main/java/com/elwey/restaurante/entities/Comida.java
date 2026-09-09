@@ -40,14 +40,6 @@ public class Comida {
     @JoinColumn(name = "categoria_id", nullable = false, unique = false)
     private Categoria categoria;
 
-    // Constructor sin ID para facilitar creación directa
-    public Comida(String nombre, Double precio, String descripcion, Categoria categoria) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-    }
-
     // Métodos de compatibilidad con las vistas de plantillas
     public Comida getComida() {
         return this;

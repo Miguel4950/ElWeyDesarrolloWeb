@@ -48,6 +48,9 @@ public class ComidaServiceImpl implements ComidaService {
     @Override
     @Transactional
     public void deleteById(Long id) {
+        if (!comidaRepository.existsById(id)) {
+            throw new ComidaNotFoundException(id);
+        }
         comidaRepository.deleteById(id);
     }
 

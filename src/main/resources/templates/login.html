@@ -35,33 +35,14 @@
                 </h1>
                 <!-- Subtexto informativo -->
                 <p class="login-desc">
-                    Ingresa tus credenciales o selecciona un perfil de acceso
+                    Ingresa tu correo y contraseña para acceder al sistema
                 </p>
-            </div>
-
-            <!-- Botones de Acceso Rápido por Rol -->
-            <div class="roles-seccion">
-                <p class="roles-titulo">
-                    Acceso rápido por rol:
-                </p>
-                <div class="roles-grid">
-                    <button type="button" onclick="seleccionarRol('CLIENTE', this)"
-                        class="btn-rol-rapido btn-rol-activo">
-                        Cliente
-                    </button>
-                    <button type="button" onclick="seleccionarRol('OPERADOR', this)" class="btn-rol-rapido">
-                        Operador
-                    </button>
-                    <button type="button" onclick="seleccionarRol('ADMIN', this)" class="btn-rol-rapido">
-                        Admin
-                    </button>
-                </div>
             </div>
 
             <!-- =================================================================
                  FORMULARIO CON VARIABLES THYMELEAF
                  ================================================================= -->
-            <form th:action="@{/login}" method="post" class="form-login">
+            <form th:action="@{/login}" method="post" class="form-login" autocomplete="off">
 
                 <!-- 
                     [VARIABLE THYMELEAF: MENSAJE DE ERROR]
@@ -97,8 +78,7 @@
                     <label for="email" class="form-label">
                         Correo Electrónico
                     </label>
-                    <!-- [VARIABLE THYMELEAF: EMAIL (th:value="${email}")] -->
-                    <input type="email" id="email" name="email" th:value="${email}" placeholder="nombre@ejemplo.com"
+                    <input type="email" id="email" name="email" value="" autocomplete="off" placeholder="nombre@ejemplo.com"
                         required class="form-input" />
                 </div>
 
@@ -107,55 +87,30 @@
                     <label for="password" class="form-label">
                         Contraseña
                     </label>
-                    <!-- [CAMPO FORMULARIO: PASSWORD] -->
-                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                    <input type="password" id="password" name="password" value="" autocomplete="new-password" placeholder="••••••••" required
                         class="form-input" />
                 </div>
 
-                <!-- Campo 3: Perfil / Rol -->
-                <div class="form-grupo">
-                    <label for="rol" class="form-label">
-                        Perfil / Rol:
-                    </label>
-                    <!-- 
-                        [VARIABLE THYMELEAF: ROL SELECCIONADO (th:selected="${selectedRol == 'VALOR'}")]
-                    -->
-                    <select id="rol" name="rol" onchange="actualizarBotonPorSelect(this.value)" class="form-select">
-                        <option value="CLIENTE" th:selected="${selectedRol == 'CLIENTE' or selectedRol == null}">Cliente
-                        </option>
-                        <option value="OPERADOR" th:selected="${selectedRol == 'OPERADOR'}">Operador (Cocina y
-                            Despachos)</option>
-                        <option value="ADMIN" th:selected="${selectedRol == 'ADMIN'}">Administrador</option>
-
-                        <!-- Si se proporciona una lista dinámica de roles desde Spring Boot: -->
-                        <!-- <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option> -->
-                    </select>
-                </div>
-
                 <!-- Botón de Envío -->
-                <!-- [VARIABLE THYMELEAF: TEXTO DINÁMICO DEL BOTÓN (th:text="${textoBoton}")] -->
-                <button type="submit" id="btn-submit-login" class="btn-submit-login"
-                    th:text="${textoBoton} ?: 'INGRESAR COMO CLIENTE'">
-                    INGRESAR COMO CLIENTE
+                <button type="submit" id="btn-submit-login" class="btn-submit-login">
+                    INICIAR SESIÓN
                 </button>
             </form>
 
             <!-- Enlace a Registro -->
             <div class="login-footer-box">
-                <!-- [VARIABLE THYMELEAF: RUTA DE REGISTRO th:href="@{/registro}"] -->
                 <a th:href="@{/registro}" href="/registro" class="link-registro">
                     ¿No tienes cuenta? Regístrate aquí
                 </a>
             </div>
 
-            <!-- Credenciales de prueba rápidas para evaluación -->
-            <div style="margin-top: 18px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; font-size: 11px; color: #a89f91;">
-                <p style="margin: 0 0 6px 0; font-weight: 700; color: #fcf2e9; text-transform: uppercase; letter-spacing: 0.5px;">Credenciales de prueba:</p>
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <div><span style="color: #facc15; font-weight: 600;">Cliente 1:</span> lionel.messi@email.com / <span style="color: #fff;">messi10</span></div>
-                    <div><span style="color: #facc15; font-weight: 600;">Cliente 2:</span> cristiano.ronaldo@email.com / <span style="color: #fff;">cr7cr7</span></div>
-                    <div><span style="color: #ef4444; font-weight: 600;">Operador:</span> Selecciona rol <strong>Operador</strong> con tu cuenta</div>
-                    <div><span style="color: #ef4444; font-weight: 600;">Admin:</span> Selecciona rol <strong>Admin</strong> con tu cuenta</div>
+            <!-- Credenciales de prueba oficiales -->
+            <div style="margin-top: 20px; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; font-size: 11px; color: #a89f91;">
+                <p style="margin: 0 0 8px 0; font-weight: 700; color: #fcf2e9; text-transform: uppercase; letter-spacing: 0.5px;">Credenciales de prueba:</p>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div><span style="color: #facc15; font-weight: 700;">👤 Cliente:</span> lionel.messi@email.com / <span style="color: #fff; font-family: monospace;">messi10</span></div>
+                    <div><span style="color: #38bdf8; font-weight: 700;">🍳 Operador:</span> operador@elwey.com / <span style="color: #fff; font-family: monospace;">operador123</span></div>
+                    <div><span style="color: #ef4444; font-weight: 700;">⚙️ Admin:</span> admin@elwey.com / <span style="color: #fff; font-family: monospace;">admin123</span></div>
                 </div>
             </div>
 
@@ -178,8 +133,31 @@
     <!-- Scripts Reutilizables de Bootstrap (Tomado del fragmento) -->
     <div th:replace="~{fragmentos :: scripts}"></div>
 
-    <!-- Lógica interactiva separada en archivo JS externo -->
-    <script th:src="@{/js/login.js}" src="/js/login.js"></script>
+    <script>
+        // Limpiar campos para evitar que el navegador autocomplete credenciales guardadas por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            var emailInput = document.getElementById('email');
+            var passInput = document.getElementById('password');
+            var errorAlert = document.querySelector('.alerta-error');
+            if (!errorAlert && emailInput) {
+                emailInput.value = '';
+            }
+            if (passInput) {
+                passInput.value = '';
+            }
+        });
+        window.addEventListener('pageshow', function() {
+            var emailInput = document.getElementById('email');
+            var passInput = document.getElementById('password');
+            var errorAlert = document.querySelector('.alerta-error');
+            if (!errorAlert && emailInput) {
+                emailInput.value = '';
+            }
+            if (passInput) {
+                passInput.value = '';
+            }
+        });
+    </script>
 
 </body>
 

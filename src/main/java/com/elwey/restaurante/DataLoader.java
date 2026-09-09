@@ -223,5 +223,26 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             clienteRepository.save(cliente);
         }
+
+        // 4. Crear cuentas oficiales de Admin y Operador
+        Cliente admin = Cliente.builder()
+                .nombre("Administrador El Wey")
+                .email("admin@elwey.com")
+                .password("admin123")
+                .telefono("+57 300 000 0001")
+                .direccion("Sede Administrativa El Wey, Bogotá")
+                .fechaRegistro("2026-01-01")
+                .build();
+        clienteRepository.save(admin);
+
+        Cliente operador = Cliente.builder()
+                .nombre("Operador de Cocina")
+                .email("operador@elwey.com")
+                .password("operador123")
+                .telefono("+57 300 000 0002")
+                .direccion("Sede Cocina y Despachos, Bogotá")
+                .fechaRegistro("2026-01-01")
+                .build();
+        clienteRepository.save(operador);
     }
 }

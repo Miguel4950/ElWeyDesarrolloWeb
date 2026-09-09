@@ -143,6 +143,19 @@
   box-sizing: border-box;
 }
 
+.form-fila-dos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: 500px) {
+  .form-fila-dos {
+    grid-template-columns: 1fr;
+  }
+}
+
 .form-label {
   display: block;
   font-size: 11px;
@@ -174,6 +187,17 @@
   border-color: var(--elwey-red-hover);
   outline: none;
   box-shadow: 0 0 0 1px var(--elwey-red-hover), 0 0 15px rgba(238, 26, 14, 0.15);
+}
+
+/* Prevenir el fondo azul o blanco claro que ponen Chrome/Edge al autocompletar */
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover, 
+.form-input:-webkit-autofill:focus, 
+.form-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #241d1a inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-input::placeholder {

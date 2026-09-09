@@ -2,8 +2,7 @@ package com.elwey.restaurante.controller;
 
 import com.elwey.restaurante.entities.Cliente;
 import com.elwey.restaurante.service.ClienteService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
-
-    Logger log = LoggerFactory.getLogger(ClienteController.class);
 
     /**
      * GET /cliente/portal → Si se accede directo desde la barra de navegación,
@@ -65,7 +63,7 @@ public class ClienteController {
 
         log.info("Actualizando datos del cliente ID: {}", id);
         clienteService.guardar(cliente);
-        return "redirect:/cliente/portal/" + id;
+        return "redirect:/cliente/portal/" + id + "?actualizado";
     }
 
     /**
