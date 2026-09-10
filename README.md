@@ -1,4 +1,4 @@
-# Restaurante El Wey - Aplicación Web Spring Boot & Thymeleaf (Sprint 3)
+# Restaurante El Wey - Aplicación Web Spring Boot & Thymeleaf (Sprint 4)
 
 Proyecto web desarrollado para la materia **Desarrollo Web**, correspondiente a la entrega del **Sprint 3**, integrando persistencia con **Spring Data JPA**, base de datos en memoria **H2**, manejo global de excepciones con `@ControllerAdvice`, y la relación completa entre entidades.
 
