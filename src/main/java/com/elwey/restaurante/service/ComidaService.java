@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ComidaService {
 
-    // Métodos exactos de la clase del profesor
+    // Operaciones principales del servicio de comidas
     List<Comida> seeAll();
 
     Comida searchById(Long id);

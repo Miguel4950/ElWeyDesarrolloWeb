@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "comidas")
+@ToString(exclude = {"comidas", "adicionales"})
 public class Categoria {
 
     @Id
@@ -28,11 +28,21 @@ public class Categoria {
     @Column(nullable = true, unique = false, length = 255)
     private String descripcion;
 
-    @Column(nullable = true, unique = false)
-    private Boolean activo;
+    @Column(nullable = false, unique = false)
+    @Builder.Default
+    private Boolean activo = true;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Builder.Default
     private List<Comida> comidas = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "categoria_adicional",
+        joinColumns = @JoinColumn(name = "id_categoria"),
+        inverseJoinColumns = @JoinColumn(name = "id_adicional")
+    )
+    @Builder.Default
+    private List<Adicional> adicionales = new ArrayList<>();
 }

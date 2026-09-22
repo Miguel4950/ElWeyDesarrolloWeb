@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import com.elwey.restaurante.errors.ComidaEnUsoException;
+import com.elwey.restaurante.repository.ItemPedidoRepository;
+
 @Service
 public class ComidaServiceImpl implements ComidaService {
 
@@ -20,6 +23,9 @@ public class ComidaServiceImpl implements ComidaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -48,10 +54,14 @@ public class ComidaServiceImpl implements ComidaService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        if (!comidaRepository.existsById(id)) {
-            throw new ComidaNotFoundException(id);
+        Comida comida = comidaRepository.findById(id)
+                .orElseThrow(() -> new ComidaNotFoundException(id));
+
+        if (!itemPedidoRepository.findByComidaId(id).isEmpty()) {
+            throw new ComidaEnUsoException(id, comida.getNombre());
         }
-        comidaRepository.deleteById(id);
+
+        comidaRepository.delete(comida);
     }
 
     // Métodos de compatibilidad con vistas existentes
@@ -85,7 +95,8 @@ public class ComidaServiceImpl implements ComidaService {
         if (query == null || query.trim().isEmpty()) {
             return seeAll();
         }
-        return comidaRepository.findByNombre(query.trim());
+        String cleanQuery = query.trim();
+        return comidaRepository.findByNombreContainingIgnoreCaseOrCategoriaNombreContainingIgnoreCase(cleanQuery, cleanQuery);
     }
 
     @Override

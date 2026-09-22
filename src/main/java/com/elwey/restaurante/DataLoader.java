@@ -1,16 +1,29 @@
 package com.elwey.restaurante;
 
+import com.elwey.restaurante.entities.Adicional;
+import com.elwey.restaurante.entities.Administrador;
 import com.elwey.restaurante.entities.Categoria;
 import com.elwey.restaurante.entities.Cliente;
 import com.elwey.restaurante.entities.Comida;
+import com.elwey.restaurante.entities.Domiciliario;
+import com.elwey.restaurante.entities.ItemPedido;
+import com.elwey.restaurante.entities.Operador;
+import com.elwey.restaurante.entities.Pedido;
+import com.elwey.restaurante.repository.AdicionalRepository;
+import com.elwey.restaurante.repository.AdministradorRepository;
 import com.elwey.restaurante.repository.CategoriaRepository;
 import com.elwey.restaurante.repository.ClienteRepository;
 import com.elwey.restaurante.repository.ComidaRepository;
+import com.elwey.restaurante.repository.DomiciliarioRepository;
+import com.elwey.restaurante.repository.ItemPedidoRepository;
+import com.elwey.restaurante.repository.OperadorRepository;
+import com.elwey.restaurante.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +39,24 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private AdicionalRepository adicionalRepository;
+
+    @Autowired
+    private DomiciliarioRepository domiciliarioRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
+
+    @Autowired
+    private AdministradorRepository administradorRepository;
+
+    @Autowired
+    private OperadorRepository operadorRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -244,5 +275,275 @@ public class DataLoader implements CommandLineRunner {
                 .fechaRegistro("2026-01-01")
                 .build();
         clienteRepository.save(operador);
+
+        // 5. Crear adicionales distribuidos en las 5 Categorías
+        List<Adicional> adicionales = new ArrayList<>();
+
+        // Tacos extras
+        adicionales.add(Adicional.builder().nombre("Cebollitas Cambray Asadas").precio(3000.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Salsa Habanera Tatemada Extra").precio(2500.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Porción Piña Asada Caramelizada").precio(2000.0).activo(true).build());
+
+        // Quesadillas extras
+        adicionales.add(Adicional.builder().nombre("Queso Oaxaca Extra Fundido").precio(4500.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Guacamole Tradicional Extra").precio(4000.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Chorizo Casero a la Plancha").precio(4500.0).activo(true).build());
+
+        // Entradas extras
+        adicionales.add(Adicional.builder().nombre("Totopos Artesanales Crujientes").precio(3500.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Pico de Gallo Fresco Casero").precio(2500.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Crema Ácida Mexicana Especial").precio(2500.0).activo(true).build());
+
+        // Especialidades extras
+        adicionales.add(Adicional.builder().nombre("Consomé de Birria para Sumergir").precio(5000.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Frijoles Refritos Bayos").precio(3500.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Chicharrón de Cerdo Crujiente").precio(4500.0).activo(true).build());
+
+        // Burritos extras
+        adicionales.add(Adicional.builder().nombre("Arroz Rojo a la Mexicana").precio(3000.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Jalapeños en Escabeche Caseros").precio(2500.0).activo(true).build());
+        adicionales.add(Adicional.builder().nombre("Salsa Verde Taquera Extra").precio(2000.0).activo(true).build());
+
+        for (int i = 0; i < adicionales.size(); i++) {
+            adicionales.set(i, adicionalRepository.save(adicionales.get(i)));
+        }
+
+        // Asociar a categorías en la tabla intermedia categoria_adicional (relación Many-to-Many con adicionales compartidos)
+        catTacos.getAdicionales().addAll(List.of(
+                adicionales.get(0), // Cebollitas Cambray Asadas
+                adicionales.get(1), // Salsa Habanera Tatemada Extra (compartido)
+                adicionales.get(2), // Porción Piña Asada Caramelizada
+                adicionales.get(3), // Queso Oaxaca Extra Fundido (compartido)
+                adicionales.get(4), // Guacamole Tradicional Extra (compartido)
+                adicionales.get(7)  // Pico de Gallo Fresco Casero (compartido)
+        ));
+
+        catQuesadillas.getAdicionales().addAll(List.of(
+                adicionales.get(3), // Queso Oaxaca Extra Fundido (compartido)
+                adicionales.get(4), // Guacamole Tradicional Extra (compartido)
+                adicionales.get(5), // Chorizo Casero a la Plancha
+                adicionales.get(1), // Salsa Habanera Tatemada Extra (compartido)
+                adicionales.get(13) // Jalapeños en Escabeche Caseros (compartido)
+        ));
+
+        catEntradas.getAdicionales().addAll(List.of(
+                adicionales.get(6), // Totopos Artesanales Crujientes
+                adicionales.get(7), // Pico de Gallo Fresco Casero (compartido)
+                adicionales.get(8), // Crema Ácida Mexicana Especial
+                adicionales.get(4), // Guacamole Tradicional Extra (compartido)
+                adicionales.get(3)  // Queso Oaxaca Extra Fundido (compartido)
+        ));
+
+        catEspecialidades.getAdicionales().addAll(List.of(
+                adicionales.get(9),  // Consomé de Birria para Sumergir
+                adicionales.get(10), // Frijoles Refritos Bayos (compartido)
+                adicionales.get(11), // Chicharrón de Cerdo Crujiente
+                adicionales.get(1),  // Salsa Habanera Tatemada Extra (compartido)
+                adicionales.get(3)   // Queso Oaxaca Extra Fundido (compartido)
+        ));
+
+        catBurritos.getAdicionales().addAll(List.of(
+                adicionales.get(12), // Arroz Rojo a la Mexicana
+                adicionales.get(13), // Jalapeños en Escabeche Caseros (compartido)
+                adicionales.get(14), // Salsa Verde Taquera Extra
+                adicionales.get(3),  // Queso Oaxaca Extra Fundido (compartido)
+                adicionales.get(4),  // Guacamole Tradicional Extra (compartido)
+                adicionales.get(10)  // Frijoles Refritos Bayos (compartido)
+        ));
+
+        categoriaRepository.save(catTacos);
+        categoriaRepository.save(catQuesadillas);
+        categoriaRepository.save(catEntradas);
+        categoriaRepository.save(catEspecialidades);
+        categoriaRepository.save(catBurritos);
+
+        // 6. Crear domiciliarios oficiales del restaurante
+        List<Domiciliario> domiciliarios = new ArrayList<>();
+        domiciliarios.add(Domiciliario.builder().cedula("1010203040").nombre("Carlos Gómez").celular("+57 311 222 3333").disponible(true).build());
+        domiciliarios.add(Domiciliario.builder().cedula("1020304050").nombre("Andrés Parra").celular("+57 312 444 5555").disponible(true).build());
+        domiciliarios.add(Domiciliario.builder().cedula("1030405060").nombre("Mateo Quintana").celular("+57 315 666 7777").disponible(true).build());
+        domiciliarios.add(Domiciliario.builder().cedula("1040506070").nombre("Javier Morales").celular("+57 318 888 9999").disponible(false).build());
+        domiciliarios.add(Domiciliario.builder().cedula("1050607080").nombre("Sebastián Roa").celular("+57 320 111 2222").disponible(true).build());
+
+        for (Domiciliario d : domiciliarios) {
+            domiciliarioRepository.save(d);
+        }
+
+        // 7. Crear entidades de Administrador y Operador (Diagrama ER)
+        administradorRepository.save(Administrador.builder().usuario("admin_elwey").contrasena("admin123").build());
+        administradorRepository.save(Administrador.builder().usuario("gerencia_elwey").contrasena("gerente2026").build());
+
+        operadorRepository.save(Operador.builder().nombre("Juan Camilo Chef").usuario("chef_camilo").contrasena("cocina123").build());
+        operadorRepository.save(Operador.builder().nombre("Paola Despachos").usuario("paola_despachos").contrasena("despacho123").build());
+
+        // 8. Crear pedidos iniciales con sus Items, Comidas y Adicionales
+        List<Cliente> clientesEnDb = clienteRepository.findAll();
+        Cliente messi = clientesEnDb.get(0);
+        Cliente cr7 = clientesEnDb.get(1);
+        Cliente falcao = clientesEnDb.get(2);
+        Cliente james = clientesEnDb.get(3);
+        Cliente lucho = clientesEnDb.get(4);
+        Cliente neymar = clientesEnDb.get(5);
+
+        // Pedido 1: Messi
+        Pedido ped1 = Pedido.builder()
+                .cliente(messi)
+                .domiciliario(domiciliarios.get(0))
+                .estado("En camino")
+                .fechaCreacion(LocalDateTime.now().minusMinutes(45))
+                .total(59500.0)
+                .build();
+        ped1 = pedidoRepository.save(ped1);
+
+        ItemPedido item1Ped1 = ItemPedido.builder()
+                .pedido(ped1)
+                .comida(comidas.get(0)) // Tacos al Pastor (18000)
+                .cantidad(2)
+                .subtotal(41000.0) // 18000*2 + 3000 + 2000
+                .adicionales(List.of(adicionales.get(0), adicionales.get(2)))
+                .build();
+        itemPedidoRepository.save(item1Ped1);
+
+        ItemPedido item2Ped1 = ItemPedido.builder()
+                .pedido(ped1)
+                .comida(comidas.get(2)) // Guacamole El Wey (15000)
+                .cantidad(1)
+                .subtotal(18500.0) // 15000 + 3500
+                .adicionales(List.of(adicionales.get(6)))
+                .build();
+        itemPedidoRepository.save(item2Ped1);
+
+        // Pedido 2: CR7
+        Pedido ped2 = Pedido.builder()
+                .cliente(cr7)
+                .domiciliario(domiciliarios.get(1))
+                .estado("En preparación")
+                .fechaCreacion(LocalDateTime.now().minusMinutes(20))
+                .total(54000.0)
+                .build();
+        ped2 = pedidoRepository.save(ped2);
+
+        ItemPedido item1Ped2 = ItemPedido.builder()
+                .pedido(ped2)
+                .comida(comidas.get(1)) // Quesadilla de Birria (22000)
+                .cantidad(1)
+                .subtotal(27000.0) // 22000 + 5000
+                .adicionales(List.of(adicionales.get(9)))
+                .build();
+        itemPedidoRepository.save(item1Ped2);
+
+        ItemPedido item2Ped2 = ItemPedido.builder()
+                .pedido(ped2)
+                .comida(comidas.get(4)) // Burrito Norteño (24000)
+                .cantidad(1)
+                .subtotal(27000.0) // 24000 + 3000
+                .adicionales(List.of(adicionales.get(12)))
+                .build();
+        itemPedidoRepository.save(item2Ped2);
+
+        // Pedido 3: Falcao
+        Pedido ped3 = Pedido.builder()
+                .cliente(falcao)
+                .domiciliario(domiciliarios.get(2))
+                .estado("Entregado")
+                .fechaCreacion(LocalDateTime.now().minusHours(3))
+                .fechaEntrega(LocalDateTime.now().minusHours(2))
+                .total(78000.0)
+                .build();
+        ped3 = pedidoRepository.save(ped3);
+
+        ItemPedido item1Ped3 = ItemPedido.builder()
+                .pedido(ped3)
+                .comida(comidas.get(6)) // Nachos El Wey (23000)
+                .cantidad(1)
+                .subtotal(27000.0) // 23000 + 4000
+                .adicionales(List.of(adicionales.get(4)))
+                .build();
+        itemPedidoRepository.save(item1Ped3);
+
+        ItemPedido item2Ped3 = ItemPedido.builder()
+                .pedido(ped3)
+                .comida(comidas.get(7)) // Gringa con Carne (21000)
+                .cantidad(2)
+                .subtotal(51000.0) // 21000*2 + 4500*2
+                .adicionales(List.of(adicionales.get(3)))
+                .build();
+        itemPedidoRepository.save(item2Ped3);
+
+        // Pedido 4: James Rodríguez
+        Pedido ped4 = Pedido.builder()
+                .cliente(james)
+                .domiciliario(domiciliarios.get(4))
+                .estado("En preparación")
+                .fechaCreacion(LocalDateTime.now().minusMinutes(15))
+                .total(66500.0)
+                .build();
+        ped4 = pedidoRepository.save(ped4);
+
+        ItemPedido item1Ped4 = ItemPedido.builder()
+                .pedido(ped4)
+                .comida(comidas.get(3)) // Enchiladas Rojas (20000)
+                .cantidad(1)
+                .subtotal(23500.0) // 20000 + 3500
+                .adicionales(List.of(adicionales.get(10)))
+                .build();
+        itemPedidoRepository.save(item1Ped4);
+
+        ItemPedido item2Ped4 = ItemPedido.builder()
+                .pedido(ped4)
+                .comida(comidas.get(5)) // Tacos de Suadero (19000)
+                .cantidad(2)
+                .subtotal(43000.0) // 19000*2 + 2500*2
+                .adicionales(List.of(adicionales.get(1)))
+                .build();
+        itemPedidoRepository.save(item2Ped4);
+
+        // Pedido 5: Luis Díaz
+        Pedido ped5 = Pedido.builder()
+                .cliente(lucho)
+                .domiciliario(domiciliarios.get(0))
+                .estado("Entregado")
+                .fechaCreacion(LocalDateTime.now().minusHours(5))
+                .fechaEntrega(LocalDateTime.now().minusHours(4))
+                .total(51000.0)
+                .build();
+        ped5 = pedidoRepository.save(ped5);
+
+        ItemPedido item1Ped5 = ItemPedido.builder()
+                .pedido(ped5)
+                .comida(comidas.get(28)) // Burrito California (25000)
+                .cantidad(1)
+                .subtotal(27500.0) // 25000 + 2500
+                .adicionales(List.of(adicionales.get(13)))
+                .build();
+        itemPedidoRepository.save(item1Ped5);
+
+        ItemPedido item2Ped5 = ItemPedido.builder()
+                .pedido(ped5)
+                .comida(comidas.get(11)) // Quesadilla de Chicharrón Prensado (19000)
+                .cantidad(1)
+                .subtotal(23500.0) // 19000 + 4500
+                .adicionales(List.of(adicionales.get(3)))
+                .build();
+        itemPedidoRepository.save(item2Ped5);
+
+        // Pedido 6: Neymar Jr
+        Pedido ped6 = Pedido.builder()
+                .cliente(neymar)
+                .domiciliario(domiciliarios.get(1))
+                .estado("En camino")
+                .fechaCreacion(LocalDateTime.now().minusMinutes(35))
+                .total(55000.0)
+                .build();
+        ped6 = pedidoRepository.save(ped6);
+
+        ItemPedido item1Ped6 = ItemPedido.builder()
+                .pedido(ped6)
+                .comida(comidas.get(10)) // Tacos Gobernador (25000)
+                .cantidad(2)
+                .subtotal(55000.0) // 25000*2 + 2500 + 2500
+                .adicionales(List.of(adicionales.get(0), adicionales.get(1)))
+                .build();
+        itemPedidoRepository.save(item1Ped6);
     }
 }

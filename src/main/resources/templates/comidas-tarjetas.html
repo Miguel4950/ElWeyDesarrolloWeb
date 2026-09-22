@@ -46,20 +46,28 @@
 
         <!-- Filtro por categorías tipo Pills -->
         <div class="d-flex flex-wrap gap-2">
-          <a th:href="@{/comidas/tarjetas}" class="btn btn-sm text-uppercase fw-bold filtro-pill-activo">
+          <a th:href="@{/comidas/tarjetas}" class="btn btn-sm text-uppercase fw-bold"
+            th:classappend="${query == null or query.isEmpty()} ? 'filtro-pill-activo' : 'filtro-pill-inactivo'">
             Todos (<span th:text="${comidas.size()}">8</span>)
           </a>
-          <a th:href="@{/comidas/buscar(q='Tacos')}" class="btn btn-sm text-uppercase fw-bold filtro-pill-inactivo">
+          <a th:href="@{/comidas/buscar(q='Tacos')}" class="btn btn-sm text-uppercase fw-bold"
+            th:classappend="${query != null and #strings.equalsIgnoreCase(query, 'Tacos')} ? 'filtro-pill-activo' : 'filtro-pill-inactivo'">
             Tacos
           </a>
-          <a th:href="@{/comidas/buscar(q='Quesadilla')}"
-            class="btn btn-sm text-uppercase fw-bold filtro-pill-inactivo">
+          <a th:href="@{/comidas/buscar(q='Quesadillas')}" class="btn btn-sm text-uppercase fw-bold"
+            th:classappend="${query != null and #strings.equalsIgnoreCase(query, 'Quesadillas')} ? 'filtro-pill-activo' : 'filtro-pill-inactivo'">
             Quesadillas
           </a>
-          <a th:href="@{/comidas/buscar(q='Guacamole')}" class="btn btn-sm text-uppercase fw-bold filtro-pill-inactivo">
+          <a th:href="@{/comidas/buscar(q='Entradas')}" class="btn btn-sm text-uppercase fw-bold"
+            th:classappend="${query != null and #strings.equalsIgnoreCase(query, 'Entradas')} ? 'filtro-pill-activo' : 'filtro-pill-inactivo'">
             Entradas
           </a>
-          <a th:href="@{/comidas/buscar(q='Burrito')}" class="btn btn-sm text-uppercase fw-bold filtro-pill-inactivo">
+          <a th:href="@{/comidas/buscar(q='Especialidades')}" class="btn btn-sm text-uppercase fw-bold"
+            th:classappend="${query != null and #strings.equalsIgnoreCase(query, 'Especialidades')} ? 'filtro-pill-activo' : 'filtro-pill-inactivo'">
+            Especialidades
+          </a>
+          <a th:href="@{/comidas/buscar(q='Burritos')}" class="btn btn-sm text-uppercase fw-bold"
+            th:classappend="${query != null and #strings.equalsIgnoreCase(query, 'Burritos')} ? 'filtro-pill-activo' : 'filtro-pill-inactivo'">
             Burritos
           </a>
         </div>

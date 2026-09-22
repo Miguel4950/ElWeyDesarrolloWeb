@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Clase principal de inicio de la aplicación Spring Boot (Semana 4).
+ * Clase principal de inicio de la aplicación Restaurante El Wey.
  */
 @SpringBootApplication
 public class RestauranteApplication {

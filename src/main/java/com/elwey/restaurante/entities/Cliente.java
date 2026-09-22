@@ -2,6 +2,8 @@ package com.elwey.restaurante.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -9,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "pedidos")
 public class Cliente {
 
     @Id
@@ -19,6 +21,9 @@ public class Cliente {
 
     @Column(nullable = false, unique = false, length = 70)
     private String nombre;
+
+    @Column(nullable = true, unique = false, length = 70)
+    private String apellido;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
@@ -35,12 +40,31 @@ public class Cliente {
     @Column(nullable = true, unique = false, length = 30)
     private String fechaRegistro;
 
-    // Métodos de compatibilidad con vistas y formularios anteriores
+    @OneToMany(mappedBy = "cliente")
+    @Builder.Default
+    private List<Pedido> pedidos = new ArrayList<>();
+
+    // Métodos de compatibilidad con vistas y formularios anteriores y diagrama ER
     public String getCorreo() {
         return this.email;
     }
 
     public void setCorreo(String correo) {
         this.email = correo;
+    }
+
+    public String getContrasena() {
+        return this.password;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.password = contrasena;
+    }
+
+    public String getNombreCompleto() {
+        if (this.apellido != null && !this.apellido.isBlank()) {
+            return this.nombre + " " + this.apellido;
+        }
+        return this.nombre;
     }
 }

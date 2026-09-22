@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "categoria")
+@ToString(exclude = {"categoria"})
 public class Comida {
 
     @Id
@@ -17,7 +17,7 @@ public class Comida {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(nullable = false, unique = false, length = 80)
+    @Column(nullable = false, unique = true, length = 80)
     private String nombre;
 
     @Column(nullable = false, unique = false)
@@ -26,18 +26,19 @@ public class Comida {
     @Column(nullable = true, unique = false, length = 255)
     private String descripcion;
 
-    @Column(nullable = true, unique = false, length = 500)
+    @Column(name = "imagen_url", nullable = true, unique = false, length = 500)
     private String imagenUrl;
 
     @Column(nullable = true, unique = false, length = 50)
     private String etiqueta;
 
-    @Column(nullable = true, unique = false)
-    private Boolean activo;
+    @Column(nullable = false, unique = false)
+    @Builder.Default
+    private Boolean activo = true;
 
     // Relación Many-to-One: la comida es dueña de la llave foránea
     @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false, unique = false)
+    @JoinColumn(name = "id_categoria", nullable = false, unique = false)
     private Categoria categoria;
 
     // Métodos de compatibilidad con las vistas de plantillas

@@ -77,35 +77,43 @@
               tortilla de maíz nixtamalizada.
             </p>
 
-            <!-- Adicionales e Ingredientes Tradicionales Sugeridos -->
+            <!-- Adicionales disponibles acorde a su categoría -->
             <div class="mb-4">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-uppercase fw-bold titulo-acomp-seccion">
-                  Acompañamientos Tradicionales
+                  Adicionales Disponibles
                 </span>
-                <span class="small text-uppercase subtitulo-acomp-seccion">
-                  Incluidos en el plato
+                <span class="small text-uppercase subtitulo-acomp-seccion"
+                  th:text="'Categoría: ' + (${comida.categoria != null} ? ${comida.categoria.nombre} : 'General')">
+                  Según categoría
                 </span>
               </div>
 
-              <div class="d-flex flex-column gap-2">
-                <div class="rounded d-flex justify-content-between align-items-center item-acomp-row">
-                  <span class="small texto-acomp-nombre">Limones frescos y cebollitas cambray</span>
-                  <span class="fw-bold badge-acomp-incluido">Incluido</span>
-                </div>
-                <div class="rounded d-flex justify-content-between align-items-center item-acomp-row">
-                  <span class="small texto-acomp-nombre">Salsa verde tatemada y roja habanero</span>
-                  <span class="fw-bold badge-acomp-incluido">Incluido</span>
-                </div>
-                <div class="rounded d-flex justify-content-between align-items-center item-acomp-row">
-                  <span class="small texto-acomp-nombre">Porción de totopos artesanales de cortesía</span>
-                  <span class="fw-bold badge-acomp-incluido">Incluido</span>
-                </div>
+              <!-- Lista dinámica de adicionales con checkbox seleccionable -->
+              <div class="d-flex flex-column gap-2" th:if="${comida.categoria != null and not #lists.isEmpty(comida.categoria.adicionales)}">
+                <label th:each="adic : ${comida.categoria.adicionales}"
+                  class="rounded d-flex justify-content-between align-items-center item-acomp-row p-2"
+                  style="cursor: pointer;">
+                  <div class="d-flex align-items-center gap-2">
+                    <input type="checkbox" class="form-check-input" style="cursor: pointer;" />
+                    <span class="small texto-acomp-nombre fw-semibold" th:text="${adic.nombre}">Queso Oaxaca Extra</span>
+                  </div>
+                  <span class="fw-bold badge-acomp-incluido"
+                    th:text="'+$' + ${#numbers.formatDecimal(adic.precio, 0, 'POINT', 0, 'COMMA')}">
+                    +$3.500
+                  </span>
+                </label>
+              </div>
+
+              <!-- Mensaje alternativo si no hay adicionales registrados -->
+              <div th:if="${comida.categoria == null or #lists.isEmpty(comida.categoria.adicionales)}"
+                class="rounded p-2 text-center text-muted small" style="background: rgba(255, 255, 255, 0.05);">
+                No hay adicionales disponibles registrados para esta categoría.
               </div>
             </div>
           </div>
 
-          <!-- Botones de Acción Inferiores -->
+          <!-- Botones de Acción Inferiores (Exactamente como antes) -->
           <div
             class="pt-4 border-top mt-auto d-flex flex-wrap gap-2 justify-content-between align-items-center footer-botones-detalle">
             <a th:href="@{/comidas/tarjetas}" class="btn btn-sm text-uppercase fw-semibold btn-volver-catalogo-detalle">

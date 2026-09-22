@@ -29,4 +29,12 @@ public interface ClienteService {
             eliminar(id.longValue());
         }
     }
+
+    default List<Cliente> searchAll() {
+        return listarTodos();
+    }
+
+    default Cliente searchById(Long id) {
+        return obtenerPorId(id);
+    }
 }

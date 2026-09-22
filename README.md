@@ -1,6 +1,6 @@
 # Restaurante El Wey - Aplicación Web Spring Boot & Thymeleaf (Sprint 4)
 
-Proyecto web desarrollado para la materia **Desarrollo Web**, correspondiente a la entrega del **Sprint 3**, integrando persistencia con **Spring Data JPA**, base de datos en memoria **H2**, manejo global de excepciones con `@ControllerAdvice`, y la relación completa entre entidades.
+Proyecto web desarrollado para la materia **Desarrollo Web**, correspondiente a la entrega del **Sprint 4**, integrando persistencia con **Spring Data JPA**, base de datos en memoria **H2**, manejo global de excepciones con `@ControllerAdvice`, el módulo completo de Pedidos con Domiciliarios, Adicionales, Operadores y Administradores, y la relación relacional completa entre entidades.
 
 ---
 
@@ -11,30 +11,38 @@ Proyecto web desarrollado para la materia **Desarrollo Web**, correspondiente a 
 La aplicación web permite:
 1. **A los Comensales y Clientes:**
    - Explorar la carta completa en formato de **galería de tarjetas interactivas** (`/comidas/tarjetas`) o en **tabla detallada** (`/comidas/tabla`).
-   - Buscar y filtrar platos por nombre en tiempo real.
-   - Consultar la **ficha de detalle individual** de cada platillo (`/comidas/{id}`), donde gracias a la relación JPA se visualiza de forma automática su **categoría asignada**, descripción, acompañamientos incluidos y precio.
+   - Buscar y filtrar platos por categoría y nombre en tiempo real.
+   - Consultar la **ficha de detalle individual** de cada platillo (`/comidas/{id}`), visualizando su categoría asignada, acompañamientos, ingredientes y precio.
    - Crear una cuenta de usuario (`/registro`), iniciar sesión (`/login`) y gestionar su información personal en su portal privado (`/cliente/portal/{id}`).
-2. **A los Administradores:**
+   - Visualizar el historial y estado de pedidos.
+2. **A los Operadores y Administradores:**
    - Visualizar el inventario general de comidas y cartas con opciones de edición y eliminación (`/admin/productos`).
-   - Crear nuevos platillos asignándoles su categoría mediante un selector dinámico (`/comidas/crear`).
+   - Crear nuevos platillos asignándoles su categoría y adicionales (`/comidas/crear`).
+   - Gestionar los pedidos activos, asignar domiciliarios y cambiar estados del despacho (`/pedidos`, `/pedidos/{id}`).
    - Consultar el directorio completo de clientes registrados (`/admin/vertodo`).
 
 ---
 
-## 📋 Requisitos del Sprint 3 Cumplidos
+## 📋 Requisitos y Funcionalidades del Sprint 4
 
-| Requisito del Profesor | Implementación en el Proyecto |
+| Componente / Requisito | Implementación en el Proyecto |
 | :--- | :--- |
-| **1. Tener el Sprint 3 funcionando con JPA** | Integrado `spring-boot-starter-data-jpa` en `pom.xml`, interfaces `JpaRepository<Entidad, Long>`, y eliminación de la falsa base de datos en memoria. |
-| **2. Base de datos H2 en memoria** | Configurada en `application.properties` con `jdbc:h2:mem:restaurantdb`, `ddl-auto=create-drop`, logging SQL y consola web habilitada en `/h2`. |
-| **3. Notaciones de restricciones en Entidades** | `@Column(nullable = false, unique = true, length = ...)` en `Cliente`, `Comida` y `Categoria`, usando llaves primarias `Long` con `GenerationType.IDENTITY`. |
-| **4. Prevención de bucles infinitos en Lombok** | Eliminado `@Data` en entidades relacionadas, utilizando `@Getter`, `@Setter`, `@NoArgsConstructor`, `@Builder` y `@ToString(exclude = ...)`. |
-| **5. Relación completa Comida ↔ Categoría** | `@ManyToOne` en `Comida` (dueña de la relación) y `@OneToMany(mappedBy = "categoria")` en `Categoria` con cascada. |
-| **6. Detalle de comida mostrando su categoría** | Vista `comida-detalle.html` navegando directamente a `comida.categoria.nombre` mediante el JOIN automático de JPA. |
-| **7. Manejo global de errores** | Excepción `ComidaNotFoundException`, manejador `@ControllerAdvice` (`GlobalExceptionHandler`) y vista Thymeleaf `error.html`. |
-| **8. Población de datos (DataLoader)** | Componente `DataLoader` (`CommandLineRunner`) con **5 categorías**, **40 comidas** y **10 clientes**. |
-| **9. Repositorio y README descriptivo** | Código fuente estructurado y README con descripción detallada del negocio y la arquitectura. |
-| **10. Diagrama Entidad-Relación (DER)** | Modelado en Draw.io con cardinalidades (1:N), llaves PK/FK, restricciones (@Column) y especificación técnica. |
+| **1. Persistencia JPA y H2** | Entidades JPA completas mapeadas a tablas H2 con llaves primarias, foráneas e índices. |
+| **2. Modelo Relacional Extendido** | Entidades `Pedido`, `ItemPedido`, `Domiciliario`, `Adicional`, `Operador`, `Administrador`, `Cliente`, `Comida`, `Categoria`. |
+| **3. Gestión de Pedidos** | Control y visualización de órdenes de compra con cálculo de subtotales, totales y asignación de repartidor. |
+| **4. Relaciones N:M y 1:N** | Relaciones completas: Cliente ↔ Pedidos (1:N), Pedido ↔ Items (1:N), Pedido ↔ Domiciliario (N:1), Comida ↔ Categoría (N:1), Comida/Item ↔ Adicionales. |
+| **5. Manejo Global de Errores** | `@ControllerAdvice` (`GlobalExceptionHandler`) con excepciones específicas (`PedidoNotFoundException`, `DomiciliarioNotFoundException`, `AdicionalNotFoundException`, `ComidaEnUsoException`, `ComidaNotFoundException`). |
+| **6. Población de Datos Inicial (DataLoader)** | Componente `CommandLineRunner` que precarga categorías, comidas, clientes, domiciliarios, adicionales, operadores, administradores y pedidos con items. |
+| **7. Diagramas de Diseño** | Diagrama de Clases UML y Diagramas Entidad-Relación (DER) disponibles en la carpeta `Diagramas/`. |
+
+---
+
+## 📐 Diagramas del Sistema
+
+Los diagramas arquitectónicos y relacionales del sistema se encuentran en el directorio [`Diagramas/`](file:///c:/Users/migue/Desktop/ElWeyDesarrolloWeb-main-V2/Diagramas):
+- **Diagrama de Clases UML:** `Diagramas/DiagramaDeClases.png`
+- **Diagrama Entidad-Relación (DER Físico):** `Diagramas/DiagramaER.png`
+- **Diagrama Entidad-Relación Relacional:** `Diagramas/Untitled (1) (1).png`
 
 ---
 
@@ -43,27 +51,48 @@ La aplicación web permite:
 ```
 com.elwey.restaurante
 ├── RestauranteApplication.java      // Punto de entrada @SpringBootApplication
-├── DataLoader.java                  // Carga de 40 comidas, 5 categorías y 10 clientes en H2
+├── DataLoader.java                  // Carga inicial de datos en H2 (Comidas, Clientes, Pedidos, Domiciliarios, etc.)
 ├── entities                         // Entidades JPA con restricciones
+│   ├── Adicional.java               // @Entity (id, nombre, precio, activo)
+│   ├── Administrador.java           // @Entity (idAdmin, usuario, contrasena)
 │   ├── Categoria.java               // @Entity (id, nombre, descripcion, comidas)
-│   ├── Cliente.java                 // @Entity (id, nombre, email, telefono, etc.)
-│   └── Comida.java                  // @Entity (id, nombre, precio, descripcion, categoria)
+│   ├── Cliente.java                 // @Entity (id, nombre, apellido, correo, telefono, direccion, pedidos)
+│   ├── Comida.java                  // @Entity (id, nombre, precio, descripcion, categoria, activo)
+│   ├── Domiciliario.java            // @Entity (id, cedula, nombre, celular, disponible)
+│   ├── ItemPedido.java              // @Entity (id, pedido, comida, cantidad, subtotal, adicionales)
+│   ├── Operador.java                // @Entity (idOperador, nombre, usuario, contrasena)
+│   └── Pedido.java                  // @Entity (id, cliente, domiciliario, estado, fechaCreacion, items, total)
 ├── repository                       // Interfaces Spring Data JPA
-│   ├── CategoriaRepository.java     // JpaRepository<Categoria, Long>
-│   ├── ClienteRepository.java       // JpaRepository<Cliente, Long>
-│   └── ComidaRepository.java        // JpaRepository<Comida, Long>
+│   ├── AdicionalRepository.java
+│   ├── AdministradorRepository.java
+│   ├── CategoriaRepository.java
+│   ├── ClienteRepository.java
+│   ├── ComidaRepository.java
+│   ├── DomiciliarioRepository.java
+│   ├── ItemPedidoRepository.java
+│   ├── OperadorRepository.java
+│   └── PedidoRepository.java
 ├── service                          // Capa de Lógica de Negocio (@Service, @Transactional)
+│   ├── AdicionalService.java / AdicionalServiceImpl.java
 │   ├── CategoriaService.java / CategoriaServiceImpl.java
 │   ├── ClienteService.java / ClienteServiceImpl.java
-│   └── ComidaService.java / ComidaServiceImpl.java
+│   ├── ComidaService.java / ComidaServiceImpl.java
+│   ├── DomiciliarioService.java / DomiciliarioServiceImpl.java
+│   └── PedidoService.java / PedidoServiceImpl.java
 ├── controller                       // Controladores MVC (@Controller)
 │   ├── HomeController.java          // /, /login, /registro, /admin
 │   ├── ComidaController.java        // /comidas (tarjetas, tabla, detalle, crear, guardar)
-│   └── ClienteController.java       // /cliente (portal, actualizar, eliminar)
+│   ├── ClienteController.java       // /cliente (portal, actualizar, eliminar)
+│   └── PedidoController.java        // /pedidos (listado, detalle, cambiar estado, asignar domiciliario)
 └── errors                           // Manejo Global de Errores
-    ├── ComidaNotFoundException.java     // Excepción para platillos no encontrados
-    ├── CategoriaNotFoundException.java  // Excepción para categorías no encontradas
-    └── GlobalExceptionHandler.java      // @ControllerAdvice que redirige a error.html
+    ├── AdicionalNotFoundException.java
+    ├── CategoriaNotFoundException.java
+    ├── ClienteNotFoundException.java
+    ├── ComidaEnUsoException.java
+    ├── ComidaNotFoundException.java
+    ├── DomiciliarioNotFoundException.java
+    ├── PedidoNotFoundException.java
+    └── GlobalExceptionHandler.java  // @ControllerAdvice centralizado
 ```
 
 ---
@@ -76,6 +105,10 @@ com.elwey.restaurante
 - **`GET /comidas/{id}`** : Ficha detallada de un platillo mostrando su categoría.
 - **`GET /comidas/crear`** : Formulario con `<select>` dinámico de categorías para registrar un plato.
 - **`POST /comidas/guardar`** : Guarda un plato asociándolo a la categoría seleccionada.
+- **`GET /pedidos`** : Panel de gestión y listado general de pedidos.
+- **`GET /pedidos/{id}`** : Ficha de detalle de un pedido (ítems, adicionales, total, cliente y domiciliario).
+- **`POST /pedidos/{id}/estado`** : Actualizar estado del pedido (PENDIENTE, EN_PREPARACION, EN_CAMINO, ENTREGADO, CANCELADO).
+- **`POST /pedidos/{id}/asignar-domiciliario`** : Asignación de repartidor al pedido.
 - **`GET /h2`** : Consola gráfica de la base de datos en memoria H2.
 
 ---
