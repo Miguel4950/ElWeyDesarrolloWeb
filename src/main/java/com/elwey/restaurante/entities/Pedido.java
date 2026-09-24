@@ -30,7 +30,7 @@ public class Pedido {
     @Column(name = "fecha_entrega", nullable = true, unique = false)
     private LocalDateTime fechaEntrega;
 
-    @Column(nullable = false, unique = false)
+    @Transient
     private Double total;
 
     @ManyToOne

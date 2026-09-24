@@ -23,7 +23,7 @@ public class ItemPedido {
     @Column(nullable = false, unique = false)
     private Integer cantidad;
 
-    @Column(nullable = false, unique = false)
+    @Transient
     private Double subtotal;
 
     @ManyToOne

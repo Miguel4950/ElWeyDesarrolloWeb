@@ -391,7 +391,6 @@ public class DataLoader implements CommandLineRunner {
                 .domiciliario(domiciliarios.get(0))
                 .estado("En camino")
                 .fechaCreacion(LocalDateTime.now().minusMinutes(45))
-                .total(59500.0)
                 .build();
         ped1 = pedidoRepository.save(ped1);
 
@@ -399,7 +398,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped1)
                 .comida(comidas.get(0)) // Tacos al Pastor (18000)
                 .cantidad(2)
-                .subtotal(41000.0) // 18000*2 + 3000 + 2000
                 .adicionales(List.of(adicionales.get(0), adicionales.get(2)))
                 .build();
         itemPedidoRepository.save(item1Ped1);
@@ -408,7 +406,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped1)
                 .comida(comidas.get(2)) // Guacamole El Wey (15000)
                 .cantidad(1)
-                .subtotal(18500.0) // 15000 + 3500
                 .adicionales(List.of(adicionales.get(6)))
                 .build();
         itemPedidoRepository.save(item2Ped1);
@@ -419,7 +416,6 @@ public class DataLoader implements CommandLineRunner {
                 .domiciliario(domiciliarios.get(1))
                 .estado("En preparación")
                 .fechaCreacion(LocalDateTime.now().minusMinutes(20))
-                .total(54000.0)
                 .build();
         ped2 = pedidoRepository.save(ped2);
 
@@ -427,7 +423,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped2)
                 .comida(comidas.get(1)) // Quesadilla de Birria (22000)
                 .cantidad(1)
-                .subtotal(27000.0) // 22000 + 5000
                 .adicionales(List.of(adicionales.get(9)))
                 .build();
         itemPedidoRepository.save(item1Ped2);
@@ -436,7 +431,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped2)
                 .comida(comidas.get(4)) // Burrito Norteño (24000)
                 .cantidad(1)
-                .subtotal(27000.0) // 24000 + 3000
                 .adicionales(List.of(adicionales.get(12)))
                 .build();
         itemPedidoRepository.save(item2Ped2);
@@ -448,7 +442,6 @@ public class DataLoader implements CommandLineRunner {
                 .estado("Entregado")
                 .fechaCreacion(LocalDateTime.now().minusHours(3))
                 .fechaEntrega(LocalDateTime.now().minusHours(2))
-                .total(78000.0)
                 .build();
         ped3 = pedidoRepository.save(ped3);
 
@@ -456,7 +449,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped3)
                 .comida(comidas.get(6)) // Nachos El Wey (23000)
                 .cantidad(1)
-                .subtotal(27000.0) // 23000 + 4000
                 .adicionales(List.of(adicionales.get(4)))
                 .build();
         itemPedidoRepository.save(item1Ped3);
@@ -465,7 +457,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped3)
                 .comida(comidas.get(7)) // Gringa con Carne (21000)
                 .cantidad(2)
-                .subtotal(51000.0) // 21000*2 + 4500*2
                 .adicionales(List.of(adicionales.get(3)))
                 .build();
         itemPedidoRepository.save(item2Ped3);
@@ -476,7 +467,6 @@ public class DataLoader implements CommandLineRunner {
                 .domiciliario(domiciliarios.get(4))
                 .estado("En preparación")
                 .fechaCreacion(LocalDateTime.now().minusMinutes(15))
-                .total(66500.0)
                 .build();
         ped4 = pedidoRepository.save(ped4);
 
@@ -484,7 +474,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped4)
                 .comida(comidas.get(3)) // Enchiladas Rojas (20000)
                 .cantidad(1)
-                .subtotal(23500.0) // 20000 + 3500
                 .adicionales(List.of(adicionales.get(10)))
                 .build();
         itemPedidoRepository.save(item1Ped4);
@@ -493,7 +482,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped4)
                 .comida(comidas.get(5)) // Tacos de Suadero (19000)
                 .cantidad(2)
-                .subtotal(43000.0) // 19000*2 + 2500*2
                 .adicionales(List.of(adicionales.get(1)))
                 .build();
         itemPedidoRepository.save(item2Ped4);
@@ -505,7 +493,6 @@ public class DataLoader implements CommandLineRunner {
                 .estado("Entregado")
                 .fechaCreacion(LocalDateTime.now().minusHours(5))
                 .fechaEntrega(LocalDateTime.now().minusHours(4))
-                .total(51000.0)
                 .build();
         ped5 = pedidoRepository.save(ped5);
 
@@ -513,7 +500,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped5)
                 .comida(comidas.get(28)) // Burrito California (25000)
                 .cantidad(1)
-                .subtotal(27500.0) // 25000 + 2500
                 .adicionales(List.of(adicionales.get(13)))
                 .build();
         itemPedidoRepository.save(item1Ped5);
@@ -522,7 +508,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped5)
                 .comida(comidas.get(11)) // Quesadilla de Chicharrón Prensado (19000)
                 .cantidad(1)
-                .subtotal(23500.0) // 19000 + 4500
                 .adicionales(List.of(adicionales.get(3)))
                 .build();
         itemPedidoRepository.save(item2Ped5);
@@ -533,7 +518,6 @@ public class DataLoader implements CommandLineRunner {
                 .domiciliario(domiciliarios.get(1))
                 .estado("En camino")
                 .fechaCreacion(LocalDateTime.now().minusMinutes(35))
-                .total(55000.0)
                 .build();
         ped6 = pedidoRepository.save(ped6);
 
@@ -541,7 +525,6 @@ public class DataLoader implements CommandLineRunner {
                 .pedido(ped6)
                 .comida(comidas.get(10)) // Tacos Gobernador (25000)
                 .cantidad(2)
-                .subtotal(55000.0) // 25000*2 + 2500 + 2500
                 .adicionales(List.of(adicionales.get(0), adicionales.get(1)))
                 .build();
         itemPedidoRepository.save(item1Ped6);

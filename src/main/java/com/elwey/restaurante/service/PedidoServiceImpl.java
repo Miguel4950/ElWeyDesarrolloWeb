@@ -44,19 +44,28 @@ public class PedidoServiceImpl implements PedidoService {
     private ItemPedidoRepository itemPedidoRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pedido> searchAll() {
-        return pedidoRepository.findAll();
+        List<Pedido> pedidos = pedidoRepository.findAll();
+        pedidos.forEach(this::calcularTotales);
+        return pedidos;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Pedido searchById(Long id) {
-        return pedidoRepository.findById(id)
+        Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new PedidoNotFoundException(id));
+        calcularTotales(pedido);
+        return pedido;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pedido> findByCliente(Long clienteId) {
-        return pedidoRepository.findByClienteId(clienteId);
+        List<Pedido> pedidos = pedidoRepository.findByClienteId(clienteId);
+        pedidos.forEach(this::calcularTotales);
+        return pedidos;
     }
 
     @Override
@@ -94,25 +103,20 @@ public class PedidoServiceImpl implements PedidoService {
         Domiciliario domiciliario = domiciliarios.isEmpty() ? null : domiciliarios.get(0);
 
         List<Adicional> seleccionados = new ArrayList<>();
-        double totalAdicionales = 0.0;
         if (adicionalesIds != null && !adicionalesIds.isEmpty()) {
             for (Long adicId : adicionalesIds) {
                 Adicional a = adicionalRepository.findById(adicId).orElse(null);
                 if (a != null) {
                     seleccionados.add(a);
-                    totalAdicionales += a.getPrecio();
                 }
             }
         }
-
-        double totalPedido = comida.getPrecio() + totalAdicionales;
 
         Pedido pedido = Pedido.builder()
                 .cliente(cliente)
                 .domiciliario(domiciliario)
                 .estado("En preparación")
                 .fechaCreacion(LocalDateTime.now())
-                .total(totalPedido)
                 .build();
         pedido = pedidoRepository.save(pedido);
 
@@ -120,9 +124,49 @@ public class PedidoServiceImpl implements PedidoService {
                 .pedido(pedido)
                 .comida(comida)
                 .cantidad(1)
-                .subtotal(totalPedido)
                 .adicionales(seleccionados)
                 .build();
         itemPedidoRepository.save(item);
+    }
+
+    @Override
+    public Double calcularSubtotal(ItemPedido item) {
+        if (item == null) return 0.0;
+        double precioComida = (item.getComida() != null && item.getComida().getPrecio() != null)
+                ? item.getComida().getPrecio() : 0.0;
+        double sumaAdicionales = 0.0;
+        if (item.getAdicionales() != null) {
+            for (Adicional a : item.getAdicionales()) {
+                if (a.getPrecio() != null) {
+                    sumaAdicionales += a.getPrecio();
+                }
+            }
+        }
+        int cantidad = (item.getCantidad() != null && item.getCantidad() > 0) ? item.getCantidad() : 1;
+        return (precioComida * cantidad) + sumaAdicionales;
+    }
+
+    @Override
+    public Double calcularTotal(Pedido pedido) {
+        if (pedido == null || pedido.getItems() == null) return 0.0;
+        double total = 0.0;
+        for (ItemPedido item : pedido.getItems()) {
+            total += calcularSubtotal(item);
+        }
+        return total;
+    }
+
+    @Override
+    public void calcularTotales(Pedido pedido) {
+        if (pedido == null) return;
+        double total = 0.0;
+        if (pedido.getItems() != null) {
+            for (ItemPedido item : pedido.getItems()) {
+                double sub = calcularSubtotal(item);
+                item.setSubtotal(sub);
+                total += sub;
+            }
+        }
+        pedido.setTotal(total);
     }
 }

@@ -77,7 +77,7 @@ El desarrollo del proyecto siguió el ciclo evolutivo establecido para la materi
 ### 🔹 Sprint 4: Spring Data JPA, H2, Restricciones DDL, Errores y DER
 | Requisito del Sprint 4 | Evidencia de Cumplimiento en el Proyecto |
 | :--- | :--- |
-| **Diagrama Entidad-Relación (DER)** | Modelado completo del esquema de base de datos con tipos de datos, PK, FK y restricciones (`Diagramas/DiagramaER.png`). |
+| **Diagrama Entidad-Relación (DER)** | Modelado completo del esquema de base de datos con tipos de datos, PK, FK y restricciones (`Diagramas/Diagrama_Entidad_Relacion.png`). |
 | **Persistencia con Spring Data JPA y H2** | Migración completa a `spring-boot-starter-data-jpa` con base de datos en memoria H2 (`jdbc:h2:mem:restaurantdb`). |
 | **Restricciones en Entidades JPA** | Notaciones `@Column(nullable = false, unique = true, length = ...)` en campos críticos (`correo`, `cedula`, `nombre`, etc.) y `@Id @GeneratedValue(strategy = IDENTITY)`. |
 | **Prevención de bucles infinitos (Lombok)** | Sustitución de `@Data` por anotaciones granulares (`@Getter`, `@Setter`, `@ToString(exclude = ...)`, `@NoArgsConstructor`, `@AllArgsConstructor`, `@Builder`) en entidades con relaciones bidireccionales. |
@@ -102,14 +102,12 @@ El desarrollo del proyecto siguió el ciclo evolutivo establecido para la materi
 
 ## 📐 Diagramas del Sistema
 
-Los diagramas arquitectónicos y de datos actualizados se encuentran ubicados en el directorio [`Diagramas/`](Diagramas/):
+Los diagramas arquitectónicos y de datos del sistema se encuentran ubicados en el directorio [`Diagramas/`](Diagramas/):
 
 1. **Diagrama de Clases UML (`Diagramas/DiagramaDeClases.png`):**
-   - Modela la jerarquía y relaciones entre `Cliente`, `Pedido`, `ItemPedido`, `Producto (Comida)`, `Adicional`, `Domiciliario`, `Operador` y `Administrador`.
-2. **Diagrama Entidad-Relación Físico (`Diagramas/DiagramaER.png`):**
-   - Esquema relacional con llaves primarias, llaves foráneas, tipos de datos SQL, cardinalidades (1:N, N:M resueltas) y restricciones de base de datos.
-3. **Diagrama Relacional de Entidades (`Diagramas/Untitled (1) (1).png`):**
-   - Diagrama exportado con notación de pata de gallo (Crow's Foot) que ilustra con exactitud las tablas maestras, intermedias y sus llaves en la base de datos.
+   - Modela la jerarquía, atributos, métodos y relaciones entre `Cliente`, `Pedido`, `ItemPedido`, `Producto (Comida)`, `Adicional`, `Domiciliario`, `Operador` y `Administrador`.
+2. **Diagrama Entidad-Relación (`Diagramas/Diagrama_Entidad_Relacion.png`):**
+   - Esquema relacional de base de datos con notación Crow's Foot (pata de gallo) que modela todas las tablas, llaves primarias (PK), foráneas (FK), tipos de datos SQL y cardinalidades completas.
 
 ---
 
