@@ -38,8 +38,8 @@ public class AdicionalController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    // http://localhost:8080/adicionales/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/adicionales/1 o http://localhost:8080/adicionales/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene un adicional por su ID")
     public ResponseEntity<Adicional> mostrarAdicionalPorId(@PathVariable("id") Long id) {
         // 1. Buscar adicional por identificador

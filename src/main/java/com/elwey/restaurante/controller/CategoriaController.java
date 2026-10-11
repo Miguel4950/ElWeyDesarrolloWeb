@@ -37,8 +37,8 @@ public class CategoriaController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    // http://localhost:8080/categorias/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/categorias/1 o http://localhost:8080/categorias/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene una categoría por su ID")
     public ResponseEntity<Categoria> mostrarCategoriaPorId(@PathVariable("id") Long id) {
         // 1. Buscar categoría por identificador

@@ -1,7 +1,6 @@
 package com.elwey.restaurante.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +42,8 @@ public class PedidoController {
         return new ResponseEntity<>(pedidos, HttpStatus.OK);
     }
 
-    // http://localhost:8080/pedidos/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/pedidos/1 o http://localhost:8080/pedidos/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene el detalle de un pedido por su ID")
     public ResponseEntity<Pedido> mostrarPedidoPorId(@PathVariable("id") Long id) {
         // 1. Buscar pedido por identificador
@@ -80,9 +79,9 @@ public class PedidoController {
     @Operation(summary = "Actualiza el estado de un pedido (RECIBIDO, COCINANDO, ENVIADO, ENTREGADO, CANCELADO)")
     public ResponseEntity<Pedido> cambiarEstadoPedido(
             @PathVariable("id") Long id,
-            @RequestBody Map<String, String> body) {
+            @RequestBody Pedido body) {
         // 1. Obtener el nuevo estado y actualizar el pedido
-        String estado = body.get("estado");
+        String estado = body.getEstado();
         Pedido actualizado = pedidoService.cambiarEstado(id, estado);
         return new ResponseEntity<>(actualizado, HttpStatus.OK);
     }

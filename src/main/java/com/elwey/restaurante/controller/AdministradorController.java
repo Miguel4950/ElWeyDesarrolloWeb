@@ -1,7 +1,6 @@
 package com.elwey.restaurante.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +37,8 @@ public class AdministradorController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    // http://localhost:8080/administradores/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/administradores/1 o http://localhost:8080/administradores/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene un administrador por su ID")
     public ResponseEntity<Administrador> mostrarAdministradorPorId(@PathVariable("id") Long id) {
         // 1. Buscar administrador por identificador
@@ -53,10 +52,10 @@ public class AdministradorController {
     // http://localhost:8080/administradores/login
     @PostMapping("/login")
     @Operation(summary = "Autentica a un administrador mediante usuario y contraseña")
-    public ResponseEntity<Administrador> iniciarSesionAdmin(@RequestBody Map<String, String> credenciales) {
+    public ResponseEntity<Administrador> iniciarSesionAdmin(@RequestBody Administrador credenciales) {
         // 1. Extraer credenciales y validar contra el servicio de administradores
-        String usuario = credenciales.get("usuario");
-        String contrasena = credenciales.get("contrasena");
+        String usuario = credenciales.getUsuario();
+        String contrasena = credenciales.getContrasena();
         Administrador admin = administradorService.autenticar(usuario, contrasena);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }

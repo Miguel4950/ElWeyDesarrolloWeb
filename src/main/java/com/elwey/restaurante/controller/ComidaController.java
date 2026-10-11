@@ -43,8 +43,8 @@ public class ComidaController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    // http://localhost:8080/comidas/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/comidas/1 o http://localhost:8080/comidas/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene el detalle de una comida por su ID")
     public ResponseEntity<Comida> mostrarComidaPorId(@PathVariable("id") Long id) {
         // 1. Consultar el plato por su identificador

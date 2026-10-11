@@ -37,8 +37,8 @@ public class DomiciliarioController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    // http://localhost:8080/domiciliarios/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/domiciliarios/1 o http://localhost:8080/domiciliarios/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene un domiciliario por su ID")
     public ResponseEntity<Domiciliario> mostrarDomiciliarioPorId(@PathVariable("id") Long id) {
         // 1. Buscar domiciliario por su identificador

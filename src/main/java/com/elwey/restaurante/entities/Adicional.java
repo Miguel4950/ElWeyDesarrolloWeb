@@ -40,4 +40,23 @@ public class Adicional {
     public Categoria getCategoria() {
         return (categorias != null && !categorias.isEmpty()) ? categorias.get(0) : null;
     }
+
+    public String getNombresCategorias() {
+        if (categorias == null || categorias.isEmpty()) {
+            return "General";
+        }
+        List<String> nombres = new ArrayList<>();
+        for (Categoria c : categorias) {
+            if (c != null && c.getNombre() != null) {
+                nombres.add(c.getNombre());
+            }
+        }
+        return nombres.isEmpty() ? "General" : String.join(", ", nombres);
+    }
+
+    public Long getCategoriaId() {
+        return (categorias != null && !categorias.isEmpty() && categorias.get(0) != null)
+                ? categorias.get(0).getId()
+                : 1L;
+    }
 }

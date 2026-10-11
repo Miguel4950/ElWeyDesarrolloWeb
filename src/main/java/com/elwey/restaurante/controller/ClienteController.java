@@ -1,8 +1,9 @@
 package com.elwey.restaurante.controller;
 
 import java.util.List;
-import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,7 @@ import com.elwey.restaurante.entities.Cliente;
 import com.elwey.restaurante.service.ClienteService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/clientes")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,6 +29,8 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    Logger log = LoggerFactory.getLogger(ClienteController.class);
 
     // http://localhost:8080/clientes/all
     @GetMapping("/all")
@@ -40,8 +41,8 @@ public class ClienteController {
         return new ResponseEntity<>(clientes, HttpStatus.OK);
     }
 
-    // http://localhost:8080/clientes/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/clientes/1 o http://localhost:8080/clientes/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene un cliente por su ID")
     public ResponseEntity<Cliente> mostrarClientePorId(@PathVariable("id") Long id) {
         // 1. Buscar cliente por identificador
@@ -52,10 +53,10 @@ public class ClienteController {
     // http://localhost:8080/clientes/login
     @PostMapping("/login")
     @Operation(summary = "Autentica a un cliente mediante correo y contraseña")
-    public ResponseEntity<Cliente> iniciarSesion(@RequestBody Map<String, String> credenciales) {
-        // 1. Extraer email/correo y password/contrasena del cuerpo de la petición
-        String email = credenciales.getOrDefault("email", credenciales.get("correo"));
-        String password = credenciales.getOrDefault("password", credenciales.get("contrasena"));
+    public ResponseEntity<Cliente> iniciarSesion(@RequestBody Cliente credenciales) {
+        // 1. Extraer email/correo y password/contrasena de la entidad Cliente recibida
+        String email = credenciales.getEmail() != null ? credenciales.getEmail() : credenciales.getCorreo();
+        String password = credenciales.getPassword() != null ? credenciales.getPassword() : credenciales.getContrasena();
         // 2. Autenticar credenciales a través del servicio de negocio
         Cliente cliente = clienteService.autenticar(email, password);
         return new ResponseEntity<>(cliente, HttpStatus.OK);

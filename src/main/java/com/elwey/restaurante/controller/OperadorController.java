@@ -1,7 +1,6 @@
 package com.elwey.restaurante.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +37,8 @@ public class OperadorController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    // http://localhost:8080/operadores/1
-    @GetMapping("/{id}")
+    // http://localhost:8080/operadores/1 o http://localhost:8080/operadores/find/1
+    @GetMapping({"/{id}", "/find/{id}"})
     @Operation(summary = "Obtiene un operador por su ID")
     public ResponseEntity<Operador> mostrarOperadorPorId(@PathVariable("id") Long id) {
         // 1. Buscar operador por su identificador
@@ -53,10 +52,10 @@ public class OperadorController {
     // http://localhost:8080/operadores/login
     @PostMapping("/login")
     @Operation(summary = "Autentica a un operador mediante su usuario y contraseña")
-    public ResponseEntity<Operador> iniciarSesionOperador(@RequestBody Map<String, String> credenciales) {
+    public ResponseEntity<Operador> iniciarSesionOperador(@RequestBody Operador credenciales) {
         // 1. Validar credenciales del operador
-        String usuario = credenciales.get("usuario");
-        String contrasena = credenciales.get("contrasena");
+        String usuario = credenciales.getUsuario();
+        String contrasena = credenciales.getContrasena();
         Operador operador = operadorService.autenticar(usuario, contrasena);
         return new ResponseEntity<>(operador, HttpStatus.OK);
     }

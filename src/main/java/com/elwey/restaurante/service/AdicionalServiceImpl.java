@@ -30,17 +30,20 @@ public class AdicionalServiceImpl implements AdicionalService {
     private ItemPedidoRepository itemPedidoRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Adicional> searchAll() {
         return adicionalRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Adicional searchById(Long id) {
         return adicionalRepository.findById(id)
                 .orElseThrow(() -> new AdicionalNotFoundException(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Adicional> findByCategoria(Long categoriaId) {
         return adicionalRepository.findByCategoriasId(categoriaId);
     }
@@ -57,19 +60,39 @@ public class AdicionalServiceImpl implements AdicionalService {
         if (adicional.getActivo() == null) {
             adicional.setActivo(true);
         }
+        if (adicional.getId() != null) {
+            adicionalRepository.findById(adicional.getId()).ifPresent(existente -> {
+                if (categoriaId != null && existente.getCategorias() != null) {
+                    for (Categoria catAnterior : new ArrayList<>(existente.getCategorias())) {
+                        if (catAnterior.getAdicionales() != null) {
+                            catAnterior.getAdicionales().removeIf(
+                                    a -> a.getId() != null && a.getId().equals(adicional.getId()));
+                            categoriaRepository.save(catAnterior);
+                        }
+                    }
+                    existente.getCategorias().clear();
+                } else if (adicional.getCategorias() == null || adicional.getCategorias().isEmpty()) {
+                    adicional.setCategorias(existente.getCategorias());
+                }
+            });
+        }
         Adicional guardado = adicionalRepository.save(adicional);
         if (categoriaId != null) {
             Categoria categoria = categoriaService.searchById(categoriaId);
             if (guardado.getCategorias() == null) {
                 guardado.setCategorias(new ArrayList<>());
             }
-            if (!guardado.getCategorias().contains(categoria)) {
+            boolean enAdicional = guardado.getCategorias().stream()
+                    .anyMatch(c -> c.getId() != null && c.getId().equals(categoria.getId()));
+            if (!enAdicional) {
                 guardado.getCategorias().add(categoria);
             }
             if (categoria.getAdicionales() == null) {
                 categoria.setAdicionales(new ArrayList<>());
             }
-            if (!categoria.getAdicionales().contains(guardado)) {
+            boolean enCategoria = categoria.getAdicionales().stream()
+                    .anyMatch(a -> a.getId() != null && a.getId().equals(guardado.getId()));
+            if (!enCategoria) {
                 categoria.getAdicionales().add(guardado);
                 categoriaRepository.save(categoria);
             }

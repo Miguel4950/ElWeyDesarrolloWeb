@@ -39,7 +39,7 @@ public class Comida {
 
     // Relación Many-to-One: la comida es dueña de la llave foránea
     @ManyToOne
-    @JoinColumn(name = "id_categoria", nullable = false, unique = false)
+    @JoinColumn(name = "id_categoria", nullable = true, unique = false)
     private Categoria categoria;
 
     @JsonIgnore

@@ -81,7 +81,18 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     @Transactional
     public Categoria guardar(Categoria categoria) {
-        // 1. Persistir o actualizar la categoría en base de datos
+        // 1. Si es actualización, conservar adicionales y descripción existentes cuando no se envían
+        if (categoria.getId() != null) {
+            repo.findById(categoria.getId()).ifPresent(existente -> {
+                if (categoria.getAdicionales() == null || categoria.getAdicionales().isEmpty()) {
+                    categoria.setAdicionales(existente.getAdicionales());
+                }
+                if (categoria.getDescripcion() == null || categoria.getDescripcion().isBlank()) {
+                    categoria.setDescripcion(existente.getDescripcion());
+                }
+            });
+        }
+        // 2. Persistir o actualizar la categoría en base de datos
         return repo.save(categoria);
     }
 
@@ -97,7 +108,12 @@ public class CategoriaServiceImpl implements CategoriaService {
                 comidaRepository.save(c);
             }
         }
-        // 3. Eliminar la categoría por su identificador
-        repo.deleteById(cat.getId());
+        // 3. Limpiar relaciones en la tabla intermedia categoria_adicional
+        if (cat.getAdicionales() != null && !cat.getAdicionales().isEmpty()) {
+            cat.getAdicionales().clear();
+            repo.save(cat);
+        }
+        // 4. Eliminar la categoría por su identificador
+        repo.deleteById(id);
     }
 }
