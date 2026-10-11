@@ -1,5 +1,6 @@
 package com.elwey.restaurante.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,11 +31,12 @@ public class Adicional {
     @Builder.Default
     private Boolean activo = true;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "adicionales")
     @Builder.Default
     private List<Categoria> categorias = new ArrayList<>();
 
-    // Método de compatibilidad
+    @JsonIgnore
     public Categoria getCategoria() {
         return (categorias != null && !categorias.isEmpty()) ? categorias.get(0) : null;
     }

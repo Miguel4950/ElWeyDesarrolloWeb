@@ -2,8 +2,11 @@ package com.elwey.restaurante.service;
 
 import com.elwey.restaurante.entities.Adicional;
 import com.elwey.restaurante.entities.Categoria;
+import com.elwey.restaurante.entities.ItemPedido;
 import com.elwey.restaurante.errors.AdicionalNotFoundException;
 import com.elwey.restaurante.repository.AdicionalRepository;
+import com.elwey.restaurante.repository.CategoriaRepository;
+import com.elwey.restaurante.repository.ItemPedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,12 @@ public class AdicionalServiceImpl implements AdicionalService {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     @Override
     public List<Adicional> searchAll() {
@@ -39,22 +48,33 @@ public class AdicionalServiceImpl implements AdicionalService {
     @Override
     @Transactional
     public void save(Adicional adicional, Long categoriaId) {
+        guardar(adicional, categoriaId);
+    }
+
+    @Override
+    @Transactional
+    public Adicional guardar(Adicional adicional, Long categoriaId) {
+        if (adicional.getActivo() == null) {
+            adicional.setActivo(true);
+        }
+        Adicional guardado = adicionalRepository.save(adicional);
         if (categoriaId != null) {
             Categoria categoria = categoriaService.searchById(categoriaId);
-            if (adicional.getCategorias() == null) {
-                adicional.setCategorias(new ArrayList<>());
+            if (guardado.getCategorias() == null) {
+                guardado.setCategorias(new ArrayList<>());
             }
-            if (!adicional.getCategorias().contains(categoria)) {
-                adicional.getCategorias().add(categoria);
+            if (!guardado.getCategorias().contains(categoria)) {
+                guardado.getCategorias().add(categoria);
             }
             if (categoria.getAdicionales() == null) {
                 categoria.setAdicionales(new ArrayList<>());
             }
-            if (!categoria.getAdicionales().contains(adicional)) {
-                categoria.getAdicionales().add(adicional);
+            if (!categoria.getAdicionales().contains(guardado)) {
+                categoria.getAdicionales().add(guardado);
+                categoriaRepository.save(categoria);
             }
         }
-        adicionalRepository.save(adicional);
+        return guardado;
     }
 
     @Override
@@ -65,9 +85,17 @@ public class AdicionalServiceImpl implements AdicionalService {
             for (Categoria c : adicional.getCategorias()) {
                 if (c.getAdicionales() != null) {
                     c.getAdicionales().remove(adicional);
+                    categoriaRepository.save(c);
                 }
             }
             adicional.getCategorias().clear();
+        }
+        List<ItemPedido> items = itemPedidoRepository.findAll();
+        for (ItemPedido item : items) {
+            if (item.getAdicionales() != null && item.getAdicionales().contains(adicional)) {
+                item.getAdicionales().remove(adicional);
+                itemPedidoRepository.save(item);
+            }
         }
         adicionalRepository.delete(adicional);
     }

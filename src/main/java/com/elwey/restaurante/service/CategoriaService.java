@@ -20,4 +20,8 @@ public interface CategoriaService {
     void quitarComida(Long comidaId);
 
     Long obtenerIdPorComidaId(Long comidaId);
+
+    Categoria guardar(Categoria categoria);
+
+    void eliminar(Long id);
 }

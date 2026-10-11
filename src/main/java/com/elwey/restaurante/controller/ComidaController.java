@@ -1,140 +1,108 @@
 package com.elwey.restaurante.controller;
 
-import com.elwey.restaurante.entities.Comida;
-import com.elwey.restaurante.service.CategoriaService;
-import com.elwey.restaurante.service.ComidaService;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import com.elwey.restaurante.entities.Comida;
+import com.elwey.restaurante.service.ComidaService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
+@RestController
 @RequestMapping("/comidas")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ComidaController {
 
     @Autowired
-    private ComidaService service;
-
-    @Autowired
-    private CategoriaService categoriaService;
+    private ComidaService comidaService;
 
     Logger log = LoggerFactory.getLogger(ComidaController.class);
 
-    /**
-     * GET /comidas/tabla → Muestra la vista de comida en formato de tabla.
-     * Envía al modelo:
-     * • comidas → lista completa de platos con su categoría asociada
-     * • esAdmin → bandera para activar el modo de administración
-     */
-    @GetMapping("/tabla")
-    public String mostrarTabla(Model model) {
-        model.addAttribute("comidas", service.seeAll());
-        model.addAttribute("esAdmin", false);
-        return "comidas-tabla";
+    // http://localhost:8080/comidas/all
+    @GetMapping("/all")
+    @Operation(summary = "Encuentra todas las comidas del menú")
+    public ResponseEntity<List<Comida>> mostrarComidas() {
+        // 1. Obtener listado completo de platos desde el servicio
+        List<Comida> lista = comidaService.seeAll();
+        // 2. Retornar respuesta HTTP 200 OK con la colección
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    /**
-     * GET /comidas, GET /comidas/, GET /comidas/tarjetas → Muestra la vista de
-     * tarjetas del menú.
-     * Envía al modelo:
-     * • comidas → lista de platos con su categoría para mostrar tarjetas
-     */
-    @GetMapping({ "", "/", "/tarjetas" })
-    public String mostrarTarjetas(Model model) {
-        model.addAttribute("comidas", service.seeAll());
-        return "comidas-tarjetas";
-    }
-
-    /**
-     * GET /comidas/{id} → Muestra el detalle completo de una comida específica.
-     * Recibe:
-     * • id → identificador del plato a consultar
-     * Envía al modelo:
-     * • comida → datos completos del plato para renderizar la vista de detalle
-     */
+    // http://localhost:8080/comidas/1
     @GetMapping("/{id}")
-    public String mostrarDetalle(@PathVariable("id") Long id, Model model) {
-        Comida comida = service.searchById(id);
-        model.addAttribute("comida", comida);
-        return "comida-detalle";
+    @Operation(summary = "Obtiene el detalle de una comida por su ID")
+    public ResponseEntity<Comida> mostrarComidaPorId(@PathVariable("id") Long id) {
+        // 1. Consultar el plato por su identificador
+        Comida comida = comidaService.searchById(id);
+        // 2. Validar existencia y retornar código semántico
+        if (comida == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(comida, HttpStatus.OK);
     }
 
-    /**
-     * GET /comidas/buscar → Busca comidas por nombre desde la vista pública.
-     * Recibe:
-     * • q → texto de búsqueda
-     * Envía al modelo:
-     * • comidas → resultados filtrados por nombre
-     * • query → texto ingresado para mantenerlo en el formulario
-     */
+    // http://localhost:8080/comidas/buscar?q=taco
     @GetMapping("/buscar")
-    public String buscar(@RequestParam(name = "q", required = false) String query, Model model) {
-        model.addAttribute("comidas", service.buscarPorNombre(query));
-        model.addAttribute("query", query);
-        return "comidas-tarjetas";
+    @Operation(summary = "Busca comidas cuyo nombre coincida con el término enviado")
+    public ResponseEntity<List<Comida>> buscarComidas(
+            @RequestParam(name = "q", required = false) String query) {
+        // 1. Filtrar comidas por coincidencia parcial en el nombre
+        List<Comida> resultados = comidaService.buscarPorNombre(query);
+        return new ResponseEntity<>(resultados, HttpStatus.OK);
     }
 
-    /**
-     * GET /comidas/eliminar/{id} → Elimina una comida y redirige al panel
-     * administrativo.
-     * Recibe:
-     * • id → identificador del plato a eliminar
-     */
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable("id") Long id) {
-        log.info("Petición para eliminar comida con ID: " + id);
-        service.deleteById(id);
-        return "redirect:/admin/productos";
-    }
-
-    /**
-     * GET /comidas/crear → Muestra formulario vacío para crear un plato nuevo.
-     * Envía al modelo:
-     * • comida → objeto Comida vacío para th:object
-     * • categorias → lista de Categoria para el select dinámico
-     */
-    @GetMapping("/crear")
-    public String mostrarFormCrear(Model model) {
-        model.addAttribute("comida", new Comida());
-        model.addAttribute("categorias", categoriaService.seeAll());
-        model.addAttribute("isEdicion", false);
-        return "crear-plato";
-    }
-
-    /**
-     * POST /comidas/guardar → Guarda el plato recibiendo el objeto y el id de la
-     * categoría por @RequestParam.
-     */
-    @PostMapping("/guardar")
-    public String guardarComida(
-            @ModelAttribute("comida") Comida comida,
+    // http://localhost:8080/comidas/add
+    @PostMapping("/add")
+    @Operation(summary = "Agrega un nuevo plato al menú")
+    public ResponseEntity<Comida> agregarComida(
+            @RequestBody Comida comida,
             @RequestParam(name = "categoriaId", required = false) Long categoriaId) {
-
-        log.info("Guardando plato: {} con categoria ID: {}", comida.getNombre(), categoriaId);
-        service.save(comida, categoriaId);
-        return "redirect:/admin/productos";
+        // 1. Forzar ID nulo para garantizar inserción de un nuevo registro
+        comida.setId(null);
+        log.info("Agregando nuevo plato: {}", comida.getNombre());
+        // 2. Guardar plato con su categoría asociada y retornar 201 CREATED
+        Comida nuevaComida = comidaService.guardarComida(comida, categoriaId);
+        return new ResponseEntity<>(nuevaComida, HttpStatus.CREATED);
     }
 
-    /**
-     * GET /comidas/editar/{id} → Muestra formulario pre-relleno con datos del
-     * plato.
-     */
-    @GetMapping("/editar/{id}")
-    public String mostrarFormEditar(@PathVariable("id") Long id, Model model) {
-        Comida comida = service.searchById(id);
-
-        model.addAttribute("comida", comida);
-        model.addAttribute("categorias", categoriaService.seeAll());
-        model.addAttribute("categoriaActualId", comida.getCategoria() != null ? comida.getCategoria().getId() : null);
-        model.addAttribute("isEdicion", true);
-        return "crear-plato";
+    // http://localhost:8080/comidas/update
+    @PutMapping("/update")
+    @Operation(summary = "Actualiza los datos de un plato existente")
+    public ResponseEntity<Comida> actualizarComida(
+            @RequestBody Comida comida,
+            @RequestParam(name = "categoriaId", required = false) Long categoriaId) {
+        // 1. Verificar que el plato exista antes de actualizar
+        if (comida.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        comidaService.searchById(comida.getId());
+        // 2. Guardar los cambios y devolver 200 OK con la entidad actualizada
+        Comida actualizada = comidaService.guardarComida(comida, categoriaId);
+        return new ResponseEntity<>(actualizada, HttpStatus.OK);
     }
 
+    // http://localhost:8080/comidas/delete/1
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Elimina un plato del menú por su ID")
+    public ResponseEntity<Void> eliminarComida(@PathVariable("id") Long id) {
+        // 1. Invocar eliminación en el servicio y retornar 204 NO CONTENT
+        log.info("Eliminando comida con ID: {}", id);
+        comidaService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

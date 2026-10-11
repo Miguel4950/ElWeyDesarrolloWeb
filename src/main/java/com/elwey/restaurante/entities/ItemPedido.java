@@ -1,5 +1,6 @@
 package com.elwey.restaurante.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class ItemPedido {
     @Transient
     private Double subtotal;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_pedido", nullable = false, unique = false)
     private Pedido pedido;

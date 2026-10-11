@@ -1,5 +1,6 @@
 package com.elwey.restaurante.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,12 +42,28 @@ public class Comida {
     @JoinColumn(name = "id_categoria", nullable = false, unique = false)
     private Categoria categoria;
 
-    // Métodos de compatibilidad con las vistas de plantillas
+    @JsonIgnore
     public Comida getComida() {
         return this;
     }
 
     public String getNombreCategoria() {
         return this.categoria != null ? this.categoria.getNombre() : "Sin Categoría";
+    }
+
+    public String getImagen_url() {
+        return this.imagenUrl;
+    }
+
+    public void setImagen_url(String imagen_url) {
+        if (imagen_url != null) {
+            this.imagenUrl = imagen_url;
+        }
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        if (imagenUrl != null) {
+            this.imagenUrl = imagenUrl;
+        }
     }
 }

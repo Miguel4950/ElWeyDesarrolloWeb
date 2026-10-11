@@ -43,12 +43,33 @@ public class ComidaServiceImpl implements ComidaService {
     @Override
     @Transactional
     public void save(Comida comida, Long categoriaId) {
-        if (categoriaId != null) {
-            Categoria categoria = categoriaRepository.findById(categoriaId)
-                    .orElseThrow(() -> new CategoriaNotFoundException(categoriaId));
-            comida.setCategoria(categoria);
+        guardarComida(comida, categoriaId);
+    }
+
+    @Override
+    @Transactional
+    public Comida guardarComida(Comida comida, Long categoriaId) {
+        // 1. Resolver el id de la categoria desde el parametro o el objeto anidado
+        Long catId = categoriaId;
+        if (catId == null && comida.getCategoria() != null && comida.getCategoria().getId() != null) {
+            catId = comida.getCategoria().getId();
         }
-        comidaRepository.save(comida);
+        if (catId == null) {
+            catId = 1L;
+        }
+
+        // 2. Buscar la categoria en la BD y asociarla a la comida
+        final Long idBusqueda = catId;
+        Categoria categoria = categoriaRepository.findById(idBusqueda)
+                .orElseThrow(() -> new CategoriaNotFoundException(idBusqueda));
+        comida.setCategoria(categoria);
+
+        if (comida.getActivo() == null) {
+            comida.setActivo(true);
+        }
+
+        // 3. Guardar y retornar la comida persistida
+        return comidaRepository.save(comida);
     }
 
     @Override

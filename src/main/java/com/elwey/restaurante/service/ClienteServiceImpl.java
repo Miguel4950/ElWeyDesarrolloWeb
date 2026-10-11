@@ -1,8 +1,10 @@
 package com.elwey.restaurante.service;
 
 import com.elwey.restaurante.entities.Cliente;
+import com.elwey.restaurante.entities.Pedido;
 import com.elwey.restaurante.errors.ClienteNotFoundException;
 import com.elwey.restaurante.repository.ClienteRepository;
+import com.elwey.restaurante.repository.PedidoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private ClienteRepository repo;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private PedidoService pedidoService;
 
     Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 
@@ -66,8 +74,23 @@ public class ClienteServiceImpl implements ClienteService {
         if (existente != null && (cliente.getId() == null || !existente.getId().equals(cliente.getId()))) {
             throw new IllegalArgumentException("El correo ya existe o no es válido.");
         }
+
+        if (cliente.getId() != null) {
+            repo.findById(cliente.getId()).ifPresent(actual -> {
+                if (cliente.getPassword() == null || cliente.getPassword().isBlank()) {
+                    cliente.setPassword(actual.getPassword());
+                }
+                if (cliente.getFechaRegistro() == null || cliente.getFechaRegistro().isBlank()) {
+                    cliente.setFechaRegistro(actual.getFechaRegistro());
+                }
+            });
+        }
+
         if (cliente.getFechaRegistro() == null || cliente.getFechaRegistro().isBlank()) {
             cliente.setFechaRegistro(java.time.LocalDate.now().toString());
+        }
+        if (cliente.getActivo() == null) {
+            cliente.setActivo(true);
         }
         return repo.save(cliente);
     }
@@ -78,6 +101,10 @@ public class ClienteServiceImpl implements ClienteService {
         log.info("Eliminando cliente con ID: {}", id);
         if (!repo.existsById(id)) {
             throw new ClienteNotFoundException(id);
+        }
+        List<Pedido> pedidosCliente = pedidoRepository.findByClienteId(id);
+        for (Pedido p : pedidosCliente) {
+            pedidoService.delete(p.getId());
         }
         repo.deleteById(id);
     }

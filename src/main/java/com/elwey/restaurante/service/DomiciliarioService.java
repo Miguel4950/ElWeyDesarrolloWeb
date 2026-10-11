@@ -7,5 +7,6 @@ public interface DomiciliarioService {
     List<Domiciliario> searchAll();
     Domiciliario searchById(Long id);
     void save(Domiciliario domiciliario);
+    Domiciliario guardar(Domiciliario domiciliario);
     void delete(Long id);
 }

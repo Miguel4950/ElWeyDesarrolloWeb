@@ -8,5 +8,6 @@ public interface AdicionalService {
     Adicional searchById(Long id);
     List<Adicional> findByCategoria(Long categoriaId);
     void save(Adicional adicional, Long categoriaId);
+    Adicional guardar(Adicional adicional, Long categoriaId);
     void delete(Long id);
 }

@@ -77,4 +77,27 @@ public class CategoriaServiceImpl implements CategoriaService {
                 .map(c -> c.getCategoria() != null ? c.getCategoria().getId() : null)
                 .orElse(null);
     }
+
+    @Override
+    @Transactional
+    public Categoria guardar(Categoria categoria) {
+        // 1. Persistir o actualizar la categoría en base de datos
+        return repo.save(categoria);
+    }
+
+    @Override
+    @Transactional
+    public void eliminar(Long id) {
+        // 1. Verificar que la categoría exista antes de desvincular y eliminar
+        Categoria cat = searchById(id);
+        // 2. Desvincular comidas asociadas para evitar violación de llave foránea
+        for (Comida c : comidaRepository.findAll()) {
+            if (c.getCategoria() != null && id.equals(c.getCategoria().getId())) {
+                c.setCategoria(null);
+                comidaRepository.save(c);
+            }
+        }
+        // 3. Eliminar la categoría por su identificador
+        repo.deleteById(cat.getId());
+    }
 }

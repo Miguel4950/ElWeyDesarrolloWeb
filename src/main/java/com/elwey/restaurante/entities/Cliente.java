@@ -1,5 +1,6 @@
 package com.elwey.restaurante.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
@@ -40,17 +41,29 @@ public class Cliente {
     @Column(nullable = true, unique = false, length = 30)
     private String fechaRegistro;
 
+    @Column(nullable = false, unique = false)
+    @Builder.Default
+    private Boolean activo = true;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     @Builder.Default
     private List<Pedido> pedidos = new ArrayList<>();
 
-    // Métodos de compatibilidad con vistas y formularios anteriores y diagrama ER
     public String getCorreo() {
         return this.email;
     }
 
     public void setCorreo(String correo) {
-        this.email = correo;
+        if (correo != null && !correo.isBlank()) {
+            this.email = correo;
+        }
+    }
+
+    public void setEmail(String email) {
+        if (email != null && !email.isBlank()) {
+            this.email = email;
+        }
     }
 
     public String getContrasena() {
@@ -58,7 +71,15 @@ public class Cliente {
     }
 
     public void setContrasena(String contrasena) {
-        this.password = contrasena;
+        if (contrasena != null && !contrasena.isBlank()) {
+            this.password = contrasena;
+        }
+    }
+
+    public void setPassword(String password) {
+        if (password != null && !password.isBlank()) {
+            this.password = password;
+        }
     }
 
     public String getNombreCompleto() {

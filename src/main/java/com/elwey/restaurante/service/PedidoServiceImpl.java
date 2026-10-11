@@ -93,15 +93,34 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @Transactional
     public void crearPedidoRapido(Long comidaId, List<Long> adicionalesIds) {
+        crearPedidoOrden(comidaId, null, adicionalesIds, 1);
+    }
+
+    @Override
+    @Transactional
+    public Pedido crearPedidoOrden(Long comidaId, Long clienteId, List<Long> adicionalesIds, Integer cantidad) {
+        // 1. Buscar la comida solicitada
         Comida comida = comidaRepository.findById(comidaId)
                 .orElseThrow(() -> new ComidaNotFoundException(comidaId));
 
-        List<Cliente> clientes = clienteRepository.findAll();
-        Cliente cliente = clientes.isEmpty() ? null : clientes.get(0);
+        // 2. Resolver el cliente del pedido
+        Cliente cliente = null;
+        if (clienteId != null) {
+            cliente = clienteRepository.findById(clienteId).orElse(null);
+        }
+        if (cliente == null) {
+            List<Cliente> clientes = clienteRepository.findAll();
+            cliente = clientes.isEmpty() ? null : clientes.get(0);
+        }
 
+        // 3. Asignar un domiciliario disponible
         List<Domiciliario> domiciliarios = domiciliarioRepository.findAll();
-        Domiciliario domiciliario = domiciliarios.isEmpty() ? null : domiciliarios.get(0);
+        Domiciliario domiciliario = domiciliarios.stream()
+                .filter(d -> Boolean.TRUE.equals(d.getDisponible()))
+                .findFirst()
+                .orElse(domiciliarios.isEmpty() ? null : domiciliarios.get(0));
 
+        // 4. Resolver los adicionales seleccionados
         List<Adicional> seleccionados = new ArrayList<>();
         if (adicionalesIds != null && !adicionalesIds.isEmpty()) {
             for (Long adicId : adicionalesIds) {
@@ -112,21 +131,64 @@ public class PedidoServiceImpl implements PedidoService {
             }
         }
 
+        // 5. Crear y guardar el pedido y su item asociado
         Pedido pedido = Pedido.builder()
                 .cliente(cliente)
                 .domiciliario(domiciliario)
                 .estado("En preparación")
                 .fechaCreacion(LocalDateTime.now())
+                .items(new ArrayList<>())
                 .build();
         pedido = pedidoRepository.save(pedido);
 
+        int cantFinal = (cantidad != null && cantidad > 0) ? cantidad : 1;
         ItemPedido item = ItemPedido.builder()
                 .pedido(pedido)
                 .comida(comida)
-                .cantidad(1)
+                .cantidad(cantFinal)
                 .adicionales(seleccionados)
                 .build();
-        itemPedidoRepository.save(item);
+        item = itemPedidoRepository.save(item);
+        pedido.getItems().add(item);
+
+        calcularTotales(pedido);
+        return pedido;
+    }
+
+    @Override
+    @Transactional
+    public Pedido cambiarEstado(Long pedidoId, String nuevoEstado) {
+        // 1. Buscar el pedido por su ID
+        Pedido pedido = searchById(pedidoId);
+
+        // 2. Actualizar el estado y la fecha de entrega si corresponde
+        if (nuevoEstado != null && !nuevoEstado.isBlank()) {
+            pedido.setEstado(nuevoEstado.trim());
+            if ("Entregado".equalsIgnoreCase(nuevoEstado.trim())) {
+                pedido.setFechaEntrega(LocalDateTime.now());
+            }
+        }
+        Pedido guardado = pedidoRepository.save(pedido);
+        calcularTotales(guardado);
+        return guardado;
+    }
+
+    @Override
+    @Transactional
+    public Pedido asignarDomiciliario(Long pedidoId, Long domiciliarioId) {
+        // 1. Buscar el pedido por su ID
+        Pedido pedido = searchById(pedidoId);
+
+        // 2. Buscar y asignar el domiciliario
+        if (domiciliarioId == null || domiciliarioId <= 0) {
+            pedido.setDomiciliario(null);
+        } else {
+            Domiciliario dom = domiciliarioRepository.findById(domiciliarioId).orElse(null);
+            pedido.setDomiciliario(dom);
+        }
+        Pedido guardado = pedidoRepository.save(pedido);
+        calcularTotales(guardado);
+        return guardado;
     }
 
     @Override

@@ -44,4 +44,20 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ItemPedido> items = new ArrayList<>();
+
+    public LocalDateTime getFecha_creacion() {
+        return this.fechaCreacion;
+    }
+
+    public void setFecha_creacion(LocalDateTime fecha_creacion) {
+        this.fechaCreacion = fecha_creacion;
+    }
+
+    public LocalDateTime getFecha_entrega() {
+        return this.fechaEntrega;
+    }
+
+    public void setFecha_entrega(LocalDateTime fecha_entrega) {
+        this.fechaEntrega = fecha_entrega;
+    }
 }

@@ -1,5 +1,6 @@
 package com.elwey.restaurante.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -32,6 +33,7 @@ public class Categoria {
     @Builder.Default
     private Boolean activo = true;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Builder.Default

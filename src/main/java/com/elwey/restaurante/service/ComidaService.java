@@ -26,4 +26,6 @@ public interface ComidaService {
     List<Comida> buscarPorNombre(String query);
 
     void eliminar(Long id);
+
+    Comida guardarComida(Comida comida, Long categoriaId);
 }
