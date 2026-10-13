@@ -31,11 +31,6 @@ public class DomiciliarioServiceImpl implements DomiciliarioService {
                 .orElseThrow(() -> new DomiciliarioNotFoundException(id));
     }
 
-    @Override
-    @Transactional
-    public void save(Domiciliario domiciliario) {
-        guardar(domiciliario);
-    }
 
     @Override
     @Transactional

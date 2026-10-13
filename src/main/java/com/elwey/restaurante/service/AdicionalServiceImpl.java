@@ -48,11 +48,6 @@ public class AdicionalServiceImpl implements AdicionalService {
         return adicionalRepository.findByCategoriasId(categoriaId);
     }
 
-    @Override
-    @Transactional
-    public void save(Adicional adicional, Long categoriaId) {
-        guardar(adicional, categoriaId);
-    }
 
     @Override
     @Transactional

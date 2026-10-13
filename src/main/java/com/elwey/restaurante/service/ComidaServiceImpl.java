@@ -42,12 +42,6 @@ public class ComidaServiceImpl implements ComidaService {
 
     @Override
     @Transactional
-    public void save(Comida comida, Long categoriaId) {
-        guardarComida(comida, categoriaId);
-    }
-
-    @Override
-    @Transactional
     public Comida guardarComida(Comida comida, Long categoriaId) {
         // 1. Resolver el id de la categoria desde el parametro o el objeto anidado
         Long catId = categoriaId;
@@ -85,16 +79,9 @@ public class ComidaServiceImpl implements ComidaService {
         comidaRepository.delete(comida);
     }
 
-    // Métodos de compatibilidad con vistas existentes
     @Override
     @Transactional(readOnly = true)
     public List<Comida> listarTodas() {
-        return seeAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Comida> listarTodasConCategoria() {
         return seeAll();
     }
 
@@ -106,23 +93,11 @@ public class ComidaServiceImpl implements ComidaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Comida obtenerEntidadPorId(Long id) {
-        return searchById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<Comida> buscarPorNombre(String query) {
         if (query == null || query.trim().isEmpty()) {
             return seeAll();
         }
         String cleanQuery = query.trim();
         return comidaRepository.findByNombreContainingIgnoreCaseOrCategoriaNombreContainingIgnoreCase(cleanQuery, cleanQuery);
-    }
-
-    @Override
-    @Transactional
-    public void eliminar(Long id) {
-        deleteById(id);
     }
 }
